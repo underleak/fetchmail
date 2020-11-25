@@ -7,6 +7,9 @@ Registration::Registration(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("Регистрация");
+    ui->lineEdit_2->setMaxLength(35);
+    ui->lineEdit->setMaxLength(20);
+    ui->lineEdit->setEchoMode(QLineEdit::Password);
 }
 
 Registration::~Registration()
@@ -25,13 +28,41 @@ void Registration::on_pushButton_2_clicked()
     QString login = ui->lineEdit_2->text();
     QString password = ui->lineEdit->text();
 
-    quary = QSqlQuery(Login::get_db());
-    if (!quary.exec("SELECT * FROM users"))
+    if (login.isEmpty() || password.isEmpty())
     {
-        qDebug() << quary.lastError().databaseText();
-        qDebug() << quary.lastError().driverText();
-        return;
+        qDebug() << "PLEASE ENTER BOTH PASSWORD AND LOGIN";
     }
+    else
+    {
+        quary = QSqlQuery(Login::get_db());
+        if (!quary.exec("SELECT * FROM auth"))
+        {
+            qDebug() << quary.lastError().databaseText();
+            qDebug() << quary.lastError().driverText();
+            return;
+        }
 
-    quary.exec("INSERT INTO users VALUES ('" + login + "', '" + password + "')");
+        quary.exec("SELECT * FROM auth WHERE login = '" + login + "'");
+        if (quary.size())
+            qDebug() << "USER ALREADY EXISTS";
+        else
+            quary.exec("INSERT INTO auth (login, password) VALUES ('" + login + "', '" + password + "')");
+    }
 }
+
+void Registration::on_pushButton_3_clicked()
+{
+    ui->lineEdit_2->clear();
+}
+
+void Registration::on_pushButton_4_clicked()
+{
+    ui->lineEdit->clear();
+}
+
+void Registration::on_pushButton_5_clicked()
+{
+    ui->lineEdit->echoMode() == QLineEdit::Normal ? ui->lineEdit->setEchoMode(QLineEdit::Password)
+                                                  : ui->lineEdit->setEchoMode(QLineEdit::Normal);
+}
+
