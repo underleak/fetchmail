@@ -8,6 +8,9 @@ Admin::Admin(QWidget *parent) :
 {
     ui->setupUi(this);
     query = QSqlQuery(Login::get_db());
+    ui->unblockAll->hide();
+    ui->verifyAll->hide();
+    ui->deleteAllMessages->hide();
 }
 
 Admin::~Admin()
@@ -17,6 +20,10 @@ Admin::~Admin()
 
 void Admin::on_getTable_clicked()
 {
+    ui->unblockAll->hide();
+    ui->verifyAll->hide();
+    ui->deleteAllMessages->hide();
+
     query.exec("select * from auth where login = '" + ui->lineEdit->text() + "'");
     query.first();
     recording = query.record();
@@ -27,10 +34,17 @@ void Admin::on_getTable_clicked()
     model->setEditStrategy(QSqlTableModel::OnManualSubmit);
 
     if (ui->comboBox->currentIndex() == 0)
+    {
         model->setTable("auth");
+        ui->unblockAll->show();
+        ui->verifyAll->show();
+    }
 
     if (ui->comboBox->currentIndex() == 1)
+    {
         model->setTable("data");
+        ui->deleteAllMessages->show();
+    }
 
     if (ui->comboBox->currentIndex() == 2)
     {
@@ -76,4 +90,21 @@ void Admin::on_submitChanges_clicked()
 {
     if (ui->tableView->model())
         model->submitAll();
+}
+
+void Admin::on_unblockAll_clicked()
+{
+    for (int i = 0; i < model->rowCount(); i++)
+        model->setData(model->index(i, 3), 0, Qt::EditRole);
+}
+
+void Admin::on_verifyAll_clicked()
+{
+    for (int i = 0; i < model->rowCount(); i++)
+        model->setData(model->index(i, 4), 1, Qt::EditRole);
+}
+
+void Admin::on_deleteAllMessages_clicked()
+{
+    model->removeRows(0, model->rowCount());
 }

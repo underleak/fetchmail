@@ -26,6 +26,12 @@ private slots:
     void on_updateTable_clicked();
     void on_submitChanges_clicked();
 
+    void on_unblockAll_clicked();
+
+    void on_verifyAll_clicked();
+
+    void on_deleteAllMessages_clicked();
+
 private:
     Ui::Admin *ui;
     QSqlQuery query;

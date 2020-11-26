@@ -121,7 +121,7 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>160</x>
+     <x>80</x>
      <y>130</y>
      <width>500</width>
      <height>20</height>
@@ -129,6 +129,45 @@
    </property>
    <property name="text">
     <string>Тут будет разная статистическая инфа в зависимости от выбранного параметра чекбокса выше</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="unblockAll">
+   <property name="geometry">
+    <rect>
+     <x>640</x>
+     <y>110</y>
+     <width>120</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Разблокировать всех</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="verifyAll">
+   <property name="geometry">
+    <rect>
+     <x>640</x>
+     <y>160</y>
+     <width>120</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Подтвердить всех</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="deleteAllMessages">
+   <property name="geometry">
+    <rect>
+     <x>490</x>
+     <y>160</y>
+     <width>120</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Удалить все письма</string>
    </property>
   </widget>
  </widget>
