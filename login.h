@@ -11,8 +11,14 @@
 #include <QSqlTableModel>
 #include <QBoxLayout>
 #include <QLabel>
+#include <QValidator>
+#include <QMessageBox>
 #include "registration.h"
-class Registration;
+#include "messages.h"
+#include "admin.h"
+
+
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Login; }
@@ -27,15 +33,24 @@ public:
     ~Login();
     static QSqlDatabase& get_db();
 
-private slots:
-    void on_pushButton_2_clicked();
 
+
+private slots:
     void on_pushButton_clicked();
+    void on_pushButton_2_clicked();
+    void on_pushButton_3_clicked();
+    void on_pushButton_5_clicked();
 
 private:
     Ui::Login *ui;
     Registration *registration;
     QSqlQuery quary;
+    Messages *msg;
+    Admin *adm;
+    QMessageBox::StandardButton reply;
+
+signals:
+    void next();
 
 };
 #endif // LOGIN_H
