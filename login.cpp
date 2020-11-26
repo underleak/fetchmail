@@ -63,6 +63,18 @@ void Login::on_pushButton_clicked()
     quary.exec("SELECT * FROM auth WHERE login = '" + login + "' AND password = '" + password + "'");
     if (quary.size())
     {
+        if (quary.exec("SELECT * FROM auth WHERE login = '" + login + "' AND isBlocked = 1") && quary.size())
+        {
+            reply = QMessageBox::critical(this, "Ошибка входа", "Ваш профиль был заблокирован, обратитесь в службу поддержки.", QMessageBox::Ok);
+            return;
+        }
+
+        if (quary.exec("SELECT * FROM auth WHERE login = '" + login + "' AND isVerified = 0") && quary.size())
+        {
+            reply = QMessageBox::critical(this, "Ошибка входа", "Ваш профиль еще не активирован, подождите, пока администратор подтвердит регистрацию.", QMessageBox::Ok);
+            return;
+        }
+
         QString zapros="SELECT acc_ID FROM auth WHERE login = '"+ login + "' AND password = '" + password +"'" ;
         quary.exec(zapros);
         QSqlRecord rec = quary.record();
@@ -73,8 +85,7 @@ void Login::on_pushButton_clicked()
         msg->show();
     }
     else
-        qDebug() << "HUEVO";
-        // тут логика после неуспешного входа
+        reply = QMessageBox::critical(this, "Ошибка входа", "Неправильный логин или пароль.", QMessageBox::Ok);
 }
 
 void Login::on_pushButton_3_clicked()

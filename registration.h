@@ -32,6 +32,7 @@ private slots:
 private:
     Ui::Registration *ui;
     QSqlQuery quary;
+    QMessageBox::StandardButton reply;
 };
 
 #endif // REGISTRATION_H

@@ -30,7 +30,7 @@ void Registration::on_pushButton_2_clicked()
 
     if (login.isEmpty() || password.isEmpty())
     {
-        qDebug() << "PLEASE ENTER BOTH PASSWORD AND LOGIN";
+        reply = QMessageBox::critical(this, "Ошибка регистрации", "Пожалуйста, введите логин и пароль.", QMessageBox::Ok);
     }
     else
     {
@@ -44,7 +44,7 @@ void Registration::on_pushButton_2_clicked()
 
         quary.exec("SELECT * FROM auth WHERE login = '" + login + "'");
         if (quary.size())
-            qDebug() << "USER ALREADY EXISTS";
+            reply = QMessageBox::critical(this, "Ошибка регистрации", "Пользователь с таким именем уже существует.", QMessageBox::Ok);
         else
             quary.exec("INSERT INTO auth (login, password) VALUES ('" + login + "', '" + password + "')");
     }

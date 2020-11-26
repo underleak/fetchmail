@@ -12,6 +12,8 @@
 #include <QBoxLayout>
 #include <QLabel>
 #include <QValidator>
+#include <QApplication>
+#include <QMessageBox>
 #include "registration.h"
 #include "messages.h"
 #include "admin.h"
@@ -45,6 +47,7 @@ private:
     QSqlQuery quary;
     Messages *msg;
     Admin *adm;
+    QMessageBox::StandardButton reply;
 
 signals:
     void next();
