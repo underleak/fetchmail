@@ -5,7 +5,7 @@
 #include <QSqlQuery>
 #include <QDebug>
 #include <QSqlError>
-#include "login.h"
+#include <QMessageBox>
 
 namespace Ui {
 class Registration;
@@ -23,16 +23,13 @@ signals:
     void back();
 
 private slots:
-    void on_pushButton_clicked();
-    void on_pushButton_2_clicked();
-    void on_pushButton_3_clicked();
-    void on_pushButton_4_clicked();
-    void on_pushButton_5_clicked();
+    void on_back_clicked();
+    void on_signUp_clicked();
+    void on_clear_clicked();
+    void on_showPassword_clicked();
 
 private:
     Ui::Registration *ui;
-    QSqlQuery quary;
-    QMessageBox::StandardButton reply;
 };
 
 #endif // REGISTRATION_H

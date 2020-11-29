@@ -6,7 +6,19 @@
 #include <QSqlRecord>
 #include <QSqlQuery>
 #include <QString>
+#include <QtCharts/QLineSeries>
 #include <QSqlTableModel>
+
+#include <QChartView>
+#include <QPieSeries>
+#include <QPieSlice>
+#include <QBarSet>
+#include <QStackedBarSeries>
+#include <QBarCategoryAxis>
+#include <QValueAxis>
+#include <QPolarChart>
+
+using namespace QtCharts;
 
 namespace Ui {
 class Admin;
@@ -18,27 +30,30 @@ class Admin : public QWidget
 
 public:
     explicit Admin(QWidget *parent = nullptr);
+
     ~Admin();
+
+private:
+
+    Ui::Admin *ui;
+    void getOverview();
+    QSqlQuery query;
+    QSqlRecord record;
+    QString findStat;
+    QString acc_ID;
+    QSqlTableModel *model;
 
 private slots:
     void on_getTable_clicked();
     void on_deleteSelectedRows_clicked();
-    void on_updateTable_clicked();
+    void on_updatePage_clicked();
     void on_submitChanges_clicked();
-
     void on_unblockAll_clicked();
-
     void on_verifyAll_clicked();
-
     void on_deleteAllMessages_clicked();
-
-private:
-    Ui::Admin *ui;
-    QSqlQuery query;
-    QSqlRecord recording;
-    QString findStat;
-    QString acc_ID;
-    QSqlTableModel* model;
+    void updateTable();
+    void updateStats();
+    void getStats();
 };
 
 #endif // ADMIN_H

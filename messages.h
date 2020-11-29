@@ -8,6 +8,7 @@
 #include <QSqlRecord>
 #include <QFont>
 
+
 namespace Ui {
 class Messages;
 }
@@ -23,6 +24,9 @@ public:
     void shortDisplay();
     ~Messages();
 
+
+
+
 private:
     Ui::Messages *ui;
     QListWidget *listWidget;
@@ -31,6 +35,14 @@ private:
     QSqlRecord rec;
     void refresh();
     void getStats();
+    void updateInfo();
+
+
+
+
+
+
+
 
 public slots:
       void  display (QListWidgetItem *);
@@ -39,6 +51,13 @@ private slots:
       void on_refreshButton_clicked();
       void on_hideButton_clicked();
       void on_choiceButton_clicked();
+      void on_changePersInfo_clicked();
+      void on_applyChanges_clicked();
+      void on_toolButton_clicked();
+      void slotBlock();
+      void slotDelete();
+      void changePassword();
+
 };
 
 #endif // MESSAGES_H

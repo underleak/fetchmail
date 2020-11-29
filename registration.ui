@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QPushButton" name="pushButton_5">
+  <widget class="QPushButton" name="showPassword">
    <property name="geometry">
     <rect>
      <x>500</x>
@@ -26,7 +26,7 @@
     <string>показать пароль (icon)</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="back">
    <property name="geometry">
     <rect>
      <x>330</x>
@@ -39,13 +39,13 @@
     <string>Назад</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="signUp">
    <property name="geometry">
     <rect>
-     <x>330</x>
-     <y>240</y>
-     <width>140</width>
-     <height>30</height>
+     <x>300</x>
+     <y>230</y>
+     <width>191</width>
+     <height>22</height>
     </rect>
    </property>
    <property name="text">
@@ -68,11 +68,11 @@
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Пожалуйста введите данные электронной почты:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="textLogin">
    <property name="geometry">
     <rect>
      <x>310</x>
-     <y>190</y>
+     <y>150</y>
      <width>180</width>
      <height>20</height>
     </rect>
@@ -91,19 +91,6 @@
     <string>Логин:</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_4">
-   <property name="geometry">
-    <rect>
-     <x>630</x>
-     <y>190</y>
-     <width>100</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>очистить (icon)</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
@@ -117,27 +104,27 @@
     <string>Пароль:</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
+  <widget class="QLineEdit" name="textPassword">
    <property name="geometry">
     <rect>
      <x>310</x>
-     <y>150</y>
+     <y>190</y>
      <width>180</width>
      <height>20</height>
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_3">
+  <widget class="QPushButton" name="clear">
    <property name="geometry">
     <rect>
-     <x>500</x>
-     <y>150</y>
-     <width>100</width>
-     <height>20</height>
+     <x>330</x>
+     <y>256</y>
+     <width>138</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string>очистить (icon)</string>
+    <string>Очистить </string>
    </property>
   </widget>
  </widget>

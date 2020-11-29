@@ -12,14 +12,10 @@
 #include <QBoxLayout>
 #include <QLabel>
 #include <QValidator>
-#include <QApplication>
 #include <QMessageBox>
 #include "registration.h"
 #include "messages.h"
 #include "admin.h"
-
-class Registration;
-class Messages;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Login; }
@@ -35,19 +31,16 @@ public:
     static QSqlDatabase& get_db();
 
 private slots:
-    void on_pushButton_clicked();
-    void on_pushButton_2_clicked();
-    void on_pushButton_3_clicked();
-    void on_pushButton_4_clicked();
-    void on_pushButton_5_clicked();
+    void on_sign_In_clicked();
+    void on_signUp_clicked();
+    void on_clear_clicked();
+    void on_showPassword_clicked();
 
 private:
     Ui::Login *ui;
     Registration *registration;
-    QSqlQuery quary;
     Messages *msg;
     Admin *adm;
-    QMessageBox::StandardButton reply;
 
 signals:
     void next();
