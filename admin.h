@@ -16,7 +16,7 @@
 #include <QStackedBarSeries>
 #include <QBarCategoryAxis>
 #include <QValueAxis>
-#include <QPolarChart>
+#include <QHorizontalPercentBarSeries>
 
 using namespace QtCharts;
 
@@ -53,7 +53,9 @@ private slots:
     void on_deleteAllMessages_clicked();
     void updateTable();
     void updateStats();
-    void getStats();
+    void getDonutPieChart();
+    void getVerticalBarChart();
+    void getHorizontalBarChart();
 };
 
 #endif // ADMIN_H

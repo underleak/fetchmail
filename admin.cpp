@@ -11,7 +11,9 @@ Admin::Admin(QWidget *parent) :
 
     updateStats();
     on_getTable_clicked();
-    getStats();
+    getDonutPieChart();
+    getVerticalBarChart();
+    getHorizontalBarChart();
 }
 
 Admin::~Admin()
@@ -71,6 +73,9 @@ void Admin::on_updatePage_clicked()
 {
     updateTable();
     updateStats();
+    getDonutPieChart();
+    getVerticalBarChart();
+    getHorizontalBarChart();
 }
 
 void Admin::updateStats()
@@ -88,36 +93,86 @@ void Admin::updateStats()
     ui->totalMessages->setAlignment(Qt::AlignCenter);
 }
 
-void Admin::getStats()
+void Admin::getDonutPieChart()
 {
-// 1 Pie Chart
-    QPieSeries *pieChartSeries_1 = new QPieSeries();
-    pieChartSeries_1->append("Jane", 1);
-    pieChartSeries_1->append("Loh", 2);
-    pieChartSeries_1->append("Andy", 3);
-    pieChartSeries_1->append("Barbara", 4);
-    pieChartSeries_1->append("Axel", 5);
-    pieChartSeries_1->setVerticalPosition(0.65);
+    ui->donutPieChart->hide();
 
-    QPieSlice *pieChartSlice_1 = pieChartSeries_1->slices().at(1);
-    pieChartSlice_1->setExploded();
-    pieChartSlice_1->setLabelVisible();
-    pieChartSlice_1->setPen(QPen(Qt::darkGreen, 2));
-    pieChartSlice_1->setBrush(Qt::green);
+    QPieSeries *series = new QPieSeries();
+    series->setHoleSize(0.35);
+    series->setVerticalPosition(0.45);
 
-    QChart *pieChart_1 = new QChart();
-    pieChart_1->addSeries(pieChartSeries_1);
-    //pieChart_1->setTitle("Всего писем в системе:");
-    pieChart_1->legend()->hide();
-    pieChart_1->setAnimationOptions(QChart::SeriesAnimations);
-    pieChart_1->setBackgroundBrush(QBrush(QColor("transparent")));
+    QPieSlice *seriesSlice = series->append("Kok", 23);
+    seriesSlice->setExploded();
+    seriesSlice->setLabelVisible();
+    series->append("Остальные 77%", 77);
 
-    QChartView *pieChartView_1 = new QChartView(pieChart_1);
-    pieChartView_1->setRenderHint(QPainter::Antialiasing);
-    pieChartView_1->setParent(ui->pieChart_1);
-    pieChartView_1->resize(300, 270);
-///////////////////////////////////////////////////////////////////
-// Bar Chart
+    QChart *chart = new QChart();
+    chart->addSeries(series);
+    //chart->setTitle("Всего писем в системе:");
+    chart->legend()->hide();
+    chart->setAnimationOptions(QChart::SeriesAnimations);
+    chart->setBackgroundBrush(QBrush(QColor("transparent")));
+
+    QChartView *chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->setParent(ui->donutPieChart);
+    chartView->resize(300, 300);
+    ui->donutPieChart->show();
+}
+
+
+void Admin::getVerticalBarChart()
+{
+    ui->verticalBarChart->hide();
+
+    QBarSet *set0 = new QBarSet("Дата рождения");
+    QBarSet *set1 = new QBarSet("Аватар");
+    QBarSet *set2 = new QBarSet("Имя");
+    QBarSet *set3 = new QBarSet("Фамилия");
+
+    *set0 << 25;
+    *set1 << 25;
+    *set2 << 25;
+    *set3 << 25;
+
+    set2->setBrush(QBrush(Qt::gray));
+    set3->setBrush(QBrush(Qt::gray));
+
+    QStackedBarSeries *series = new QStackedBarSeries();
+    series->append(set0);
+    series->append(set1);
+    series->append(set2);
+    series->append(set3);
+
+    QChart *chart = new QChart();
+    chart->addSeries(series);
+    chart->legend()->setAlignment(Qt::AlignTop);
+    chart->legend()->setMinimumWidth(300);
+    chart->setAnimationOptions(QChart::SeriesAnimations);
+    chart->setBackgroundBrush(QBrush(QColor("transparent")));
+
+    QStringList categories;
+    categories << "Kok";
+
+    QBarCategoryAxis *axisX = new QBarCategoryAxis();
+    axisX->append(categories);
+    chart->addAxis(axisX, Qt::AlignBottom);
+    series->attachAxis(axisX);
+
+    QValueAxis *axisY = new QValueAxis();
+    chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisY);
+
+    QChartView *chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->setParent(ui->verticalBarChart);
+    chartView->resize(300, 270);
+    ui->verticalBarChart->show();
+}
+
+void Admin::getHorizontalBarChart()
+{
+    ui->horizontalBarChart->hide();
     QBarSet *set0 = new QBarSet("Jane");
     QBarSet *set1 = new QBarSet("John");
     QBarSet *set2 = new QBarSet("Axel");
@@ -130,64 +185,36 @@ void Admin::getStats()
     *set3 << 5 << 6 << 7 << 3 << 4 << 5;
     *set4 << 9 << 7 << 5 << 3 << 1 << 2;
 
-    QStackedBarSeries *barSeries = new QStackedBarSeries();
-    barSeries->append(set0);
-    barSeries->append(set1);
-    barSeries->append(set2);
-    barSeries->append(set3);
-    barSeries->append(set4);
+    QHorizontalPercentBarSeries *series = new QHorizontalPercentBarSeries();
+    series->append(set0);
+    series->append(set1);
+    series->append(set2);
+    series->append(set3);
+    series->append(set4);
 
-    QChart *barChart = new QChart();
-    barChart->addSeries(barSeries);
-    //barChart->setTitle("Simple stackedbarchart example");
-    barChart->setAnimationOptions(QChart::SeriesAnimations);
-    barChart->setBackgroundBrush(QBrush(QColor("transparent")));
+    QChart *chart = new QChart();
+        chart->addSeries(series);
+        chart->legend()->hide();
+        chart->setAnimationOptions(QChart::SeriesAnimations);
+        chart->setBackgroundBrush(QBrush(QColor("transparent")));
 
     QStringList categories;
-    categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
+    categories << "Jan" << "Feb" << "Mar";
 
-    QBarCategoryAxis *axisX = new QBarCategoryAxis();
-    axisX->append(categories);
-    barChart->addAxis(axisX, Qt::AlignBottom);
-    barSeries->attachAxis(axisX);
+    QBarCategoryAxis *axisY = new QBarCategoryAxis();
+    axisY->append(categories);
+    chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisY);
 
-    QValueAxis *axisY = new QValueAxis();
-    barChart->addAxis(axisY, Qt::AlignLeft);
-    barSeries->attachAxis(axisY);
-    barChart->legend()->setVisible(true);
-    barChart->legend()->setAlignment(Qt::AlignBottom);
+    QValueAxis *axisX = new QValueAxis();
+    chart->addAxis(axisX, Qt::AlignBottom);
+    series->attachAxis(axisX);
 
-    QChartView *barChartView = new QChartView(barChart);
-    barChartView->setRenderHint(QPainter::Antialiasing);
-    barChartView->setParent(ui->barChart);
-    barChartView->resize(300, 270);
-///////////////////////////////////////////////////////////////////////////
-// 2 Pie Chart
-    QPieSeries *pieChartSeries_2 = new QPieSeries();
-    pieChartSeries_2->append("Jane", 1);
-    pieChartSeries_2->append("Did", 2);
-    pieChartSeries_2->append("Andy", 3);
-    pieChartSeries_2->append("Barbara", 4);
-    pieChartSeries_2->append("Axel", 5);
-    pieChartSeries_2->setVerticalPosition(0.65);
-
-    QPieSlice *pieChartSlice_2 = pieChartSeries_2->slices().at(1);
-    pieChartSlice_2->setExploded();
-    pieChartSlice_2->setLabelVisible();
-    pieChartSlice_2->setPen(QPen(Qt::darkGreen, 2));
-    pieChartSlice_2->setBrush(Qt::green);
-
-    QChart *pieChart_2 = new QChart();
-    pieChart_2->addSeries(pieChartSeries_2);
-    //pieChart_2->setTitle("Всего писем в системе:");
-    pieChart_2->legend()->hide();
-    pieChart_2->setAnimationOptions(QChart::SeriesAnimations);
-    pieChart_2->setBackgroundBrush(QBrush(QColor("transparent")));
-
-    QChartView *pieChartView_2 = new QChartView(pieChart_2);
-    pieChartView_2->setRenderHint(QPainter::Antialiasing);
-    pieChartView_2->setParent(ui->pieChart_2);
-    pieChartView_2->resize(300, 270);
+    QChartView *chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->setParent(ui->horizontalBarChart);
+    chartView->resize(300, 270);
+    ui->horizontalBarChart->show();
 }
 
 void Admin::updateTable()
