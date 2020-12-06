@@ -1,20 +1,19 @@
 #include "login.h"
 #include "ui_login.h"
 
-Login::Login(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::Login)
+Login::Login(QWidget *parent):
+      QMainWindow(parent),
+      ui(new Ui::Login)
 {
     ui->setupUi(this);
     this->setWindowTitle("Вход");
     ui->textPassword->setEchoMode(QLineEdit::Password);
 
     database = new Database();
-
     registration = new Registration();
-    connect(registration, &Registration::back, this, &Login::show);
+    messages = new Messages();
 
-    msg = new Messages();
+    connect(registration, &Registration::back, this, &Login::show);
 }
 
 Login::~Login()
@@ -28,16 +27,16 @@ void Login::on_signUp_clicked()
     this->close();
 }
 
-void Login::on_sign_In_clicked()
+void Login::on_signIn_clicked()
 {
     QString login = ui->textLogin->text();
     QString password = ui->textPassword->text();
 
     if (login == "admin" && password == "admin")
     {
-        adm = new Admin();
+        admin = new Admin();
         this->close();
-        adm->show();
+        admin->show();
         return;
     }
 
@@ -73,9 +72,9 @@ void Login::on_sign_In_clicked()
     database->query.exec("SELECT acc_ID FROM auth WHERE login = '"+ login + "' AND password = '" + password +"'");
     database->query.first();
     record = database->query.record();
-    msg->acc_id = database->query.value(record.indexOf("acc_ID")).toInt();
-    msg->shortDisplay();
-    msg->show();
+    messages->acc_id = database->query.value(record.indexOf("acc_ID")).toInt();
+    messages->shortDisplay();
+    messages->show();
     this->close();
 }
 

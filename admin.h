@@ -1,34 +1,25 @@
 #ifndef ADMIN_H
 #define ADMIN_H
 
-#include <QWidget>
-#include <QSqlError>
-#include <QSqlRecord>
-#include <QSqlQuery>
-#include <QString>
-#include <QSqlTableModel>
+#include <cstring>
+#include <QDate>
 #include "database.h"
 #include "statistics.h"
+#include "login.h"
 
 class Statistics;
 
-namespace Ui {
-class Admin;
-}
+namespace Ui { class Admin; }
 
 class Admin : public QWidget
 {
     Q_OBJECT
-
 public:
     explicit Admin(QWidget *parent = nullptr);
-
     ~Admin();
 
 private:
-    void getOverview();
     Ui::Admin *ui;
-    QString findStat;
     QSqlTableModel *model;
     Database *database;
     Statistics *statistics;
@@ -42,6 +33,11 @@ private slots:
     void on_verifyAll_clicked();
     void on_deleteAllMessages_clicked();
     void updateTable();
+    QString on_backUp_clicked();
+    void slotFullBackUp();
+    void slotStructBackUp();
+    void slotaddImport();
+    void slotrmImport();
 };
 
 #endif // ADMIN_H

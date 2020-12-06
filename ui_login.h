@@ -25,7 +25,7 @@ public:
     QWidget *centralwidget;
     QPushButton *signUp;
     QLabel *label;
-    QPushButton *sign_In;
+    QPushButton *signIn;
     QPushButton *showPassword;
     QLineEdit *textLogin;
     QLabel *label_2;
@@ -45,9 +45,9 @@ public:
         label = new QLabel(centralwidget);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(250, 180, 47, 20));
-        sign_In = new QPushButton(centralwidget);
-        sign_In->setObjectName(QString::fromUtf8("sign_In"));
-        sign_In->setGeometry(QRect(250, 260, 230, 31));
+        signIn = new QPushButton(centralwidget);
+        signIn->setObjectName(QString::fromUtf8("signIn"));
+        signIn->setGeometry(QRect(250, 260, 230, 31));
         showPassword = new QPushButton(centralwidget);
         showPassword->setObjectName(QString::fromUtf8("showPassword"));
         showPassword->setGeometry(QRect(490, 220, 151, 21));
@@ -75,7 +75,7 @@ public:
         Login->setWindowTitle(QCoreApplication::translate("Login", "Login", nullptr));
         signUp->setText(QCoreApplication::translate("Login", "\320\240\320\265\320\263\320\270\321\201\321\202\321\200\320\260\321\206\320\270\321\217", nullptr));
         label->setText(QCoreApplication::translate("Login", "\320\233\320\276\320\263\320\270\320\275:", nullptr));
-        sign_In->setText(QCoreApplication::translate("Login", "\320\222\321\205\320\276\320\264", nullptr));
+        signIn->setText(QCoreApplication::translate("Login", "\320\222\321\205\320\276\320\264", nullptr));
         showPassword->setText(QCoreApplication::translate("Login", "\320\277\320\276\320\272\320\260\320\267\320\260\321\202\321\214 \320\277\320\260\321\200\320\276\320\273\321\214 (icon)", nullptr));
         label_2->setText(QCoreApplication::translate("Login", "\320\237\320\260\321\200\320\276\320\273\321\214:", nullptr));
         clear->setText(QCoreApplication::translate("Login", "\320\276\321\207\320\270\321\201\321\202\320\270\321\202\321\214 (icon)", nullptr));

@@ -2,7 +2,6 @@
 
 Database::Database()
 {
-
     query = QSqlQuery(getDatabase());
 }
 

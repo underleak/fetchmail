@@ -40,7 +40,7 @@
      <string>Логин:</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="sign_In">
+   <widget class="QPushButton" name="signIn">
     <property name="geometry">
      <rect>
       <x>250</x>

@@ -1,6 +1,5 @@
 #include "registration.h"
 #include "ui_registration.h"
-#include "login.h"
 
 Registration::Registration(QWidget *parent) :
     QWidget(parent),
@@ -37,9 +36,8 @@ void Registration::on_signUp_clicked()
     }
 
     database->query.exec("SELECT * FROM auth WHERE login = '" + login + "'");
-
     if (!database->query.size())
-        database->query.exec("INSERT INTO auth (login, password) VALUES ('" + login + "', '" + password + "')");
+         database->query.exec("INSERT INTO auth (login, password) VALUES ('" + login + "', '" + password + "')");
     else
         QMessageBox::critical(this, "Ошибка регистрации", "Пользователь с таким именем уже существует.", QMessageBox::Ok);
 }

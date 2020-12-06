@@ -1,6 +1,5 @@
 #include "admin.h"
 #include "ui_admin.h"
-#include "login.h"
 
 Admin::Admin(QWidget *parent) :
     QWidget(parent),
@@ -12,12 +11,31 @@ Admin::Admin(QWidget *parent) :
     ui->totalMessages->setAlignment(Qt::AlignCenter);
 
     database = new Database();
-
     statistics = new Statistics(ui);
+
     statistics->updateStats();
     on_getTable_clicked();
     statistics->getDonutPieChart();
     statistics->getVerticalBarChart();
+
+    QMenu *file = new QMenu();
+    QAction *fullBackUp = new QAction("Полный бэкап");
+    QAction *structBackUp = new QAction("Бэкап структуры");
+
+    file->addAction(fullBackUp);
+    file->addAction(structBackUp);
+    connect(fullBackUp, SIGNAL(triggered()), this, SLOT(slotFullBackUp()));
+    connect(structBackUp, SIGNAL(triggered()), this, SLOT(slotStructBackUp()));
+    ui->backUp->setMenu(file);
+
+    QMenu *imp = new QMenu();
+    QAction *rmImport = new QAction("Имопрт с перезаписью");
+    QAction *addImp = new QAction("Импорт с дозаписью");
+    imp->addAction(rmImport);
+    imp->addAction(addImp);
+    connect(rmImport, SIGNAL(triggered()), this, SLOT(slotrmImport()));
+    connect(addImp, SIGNAL(triggered()), this, SLOT(slotaddImport()));
+    ui->importButton->setMenu(imp);
 }
 
 Admin::~Admin()
@@ -135,4 +153,135 @@ void Admin::on_deleteAllMessages_clicked()
         else
             database->query.exec("DELETE FROM data WHERE msg_id;");
     }
+}
+
+QString Admin::on_backUp_clicked()
+{
+    QString path = QFileDialog::getExistingDirectory(
+                this, "Open Dialog","");
+    return path;
+}
+
+void Admin::slotFullBackUp()
+{
+    char* systemQuery = "/usr/local/mysql-8.0.21-macos10.15-x86_64/bin/mysqldump -uroot -p20643579 testdb> ";
+    QTime time = QTime::currentTime();
+    QString tmpTime = time.toString();
+
+    QString tmpStr = systemQuery +  on_backUp_clicked() + "/backup" + tmpTime + ".sql";
+    std::string str = tmpStr.toStdString();
+    const char* p = str.c_str();
+    qDebug()<<p;
+    system(p);
+}
+void Admin::slotStructBackUp()
+{
+    char* systemQuery = "/usr/local/mysql-8.0.21-macos10.15-x86_64/bin/mysqldump -t -uroot -p20643579  --no-data testdb --fields-enclosed-by=\\n --fields-terminated-by=, > "; //--xml
+
+    QTime time = QTime::currentTime();
+    QString tmpTime = time.toString();
+
+    QString tmpStr = systemQuery +  on_backUp_clicked() + "/backup" + tmpTime + ".csv";
+    std::string str = tmpStr.toStdString();
+    const char* p = str.c_str();
+    qDebug()<<p;
+
+    system(p);
+}
+
+//usr/local/mysql-8.0.21-macos10.15-x86_64/bin/mysqldump  -uroot -p20643579  --no-data testdb --xml > /Users/pavelprodanov/Desktop/backup10:19:28.xml
+
+/*
+LOAD DATA  INFILE '/usr/local/mysql/data/auth2.csv'
+INTO TABLE testdb.auth
+FIELDS TERMINATED BY ','
+ENCLOSED BY ''''
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES
+(login, password, isBlocked, isVerifed, avatar,name,surname,dateBirth);*/
+
+void Admin::slotaddImport()
+{
+    QString path = "cp " + QFileDialog::getOpenFileName(
+                this, "Open Dialog"," *.csv");
+    std::string strPath = path.toStdString();
+
+    strPath+=" /usr/local/mysql/data";
+    const char* final = strPath.c_str();
+    system(final);
+
+    QString result;
+    bool flag = false;
+    for (auto i = path.end(); i >= path.begin(); --i){
+        if (*i == '/'){
+            while (i != path.end()) {
+                result.push_back(*i);
+                i++;
+            }
+            flag = true;
+        }
+        if (flag == true) break;
+    }
+
+    QString importStr = "LOAD DATA  INFILE '/usr/local/mysql/data" + result +
+            "' INTO TABLE testdb.auth "
+            "FIELDS TERMINATED BY ',' "
+            "ENCLOSED BY '''' "
+            "LINES TERMINATED BY '\n' "
+            "IGNORE 1 LINES "
+            "(login, password, isBlocked, isVerifed, avatar,name,surname,dateBirth)";
+    qDebug()<<importStr;
+
+    QSqlQuery importQuery = QSqlQuery();
+    importQuery.exec(importStr);
+
+    std::string tmp = result.toStdString();
+    std::string rmStr = "rm /usr/local/mysql/data" + tmp;
+    const char* rmChar = rmStr.c_str();
+    qDebug()<<rmChar;
+    system(rmChar);
+}
+
+void Admin::slotrmImport()
+{
+    QString path = "cp " + QFileDialog::getOpenFileName(
+                this, "Open Dialog"," *.csv");
+    std::string strPath = path.toStdString();
+
+    strPath+=" /usr/local/mysql/data";
+    const char* final = strPath.c_str();
+    system(final);
+
+    QString result;
+    bool flag = false;
+    for (auto i = path.end(); i >= path.begin(); --i){
+        if (*i == '/'){
+            while (i != path.end()) {
+                result.push_back(*i);
+                i++;
+            }
+            flag = true;
+        }
+        if (flag == true) break;
+    }
+
+    QString importStr = "LOAD DATA  INFILE '/usr/local/mysql/data" + result +
+            "' INTO TABLE testdb.auth "
+            "FIELDS TERMINATED BY ',' "
+            "ENCLOSED BY '''' "
+            "LINES TERMINATED BY '\n' "
+            "IGNORE 1 LINES "
+            "(login, password, isBlocked, isVerifed, avatar,name,surname,dateBirth)";
+    qDebug()<<importStr;
+
+    QSqlQuery importQuery = QSqlQuery();
+    importQuery.exec("delete from auth");
+    importQuery.clear();
+    importQuery.exec(importStr);
+
+    std::string tmp = result.toStdString();
+    std::string rmStr = "rm /usr/local/mysql/data" + tmp;
+    const char* rmChar = rmStr.c_str();
+    qDebug()<<rmChar;
+    system(rmChar);
 }

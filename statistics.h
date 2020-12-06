@@ -1,7 +1,6 @@
 #ifndef STATISTICS_H
 #define STATISTICS_H
 
-#include <QLineSeries>
 #include <QChartView>
 #include <QPieSeries>
 #include <QPieSlice>
@@ -9,15 +8,12 @@
 #include <QStackedBarSeries>
 #include <QBarCategoryAxis>
 #include <QValueAxis>
-#include <QHorizontalPercentBarSeries>
 #include "database.h"
 #include "admin.h"
 
 using namespace QtCharts;
 
-namespace Ui {
-class Admin;
-}
+namespace Ui { class Admin; }
 
 class Statistics
 {

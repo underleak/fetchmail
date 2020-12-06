@@ -43,6 +43,8 @@ public:
     QHBoxLayout *horizontalLayout;
     QFrame *verticalBarChart;
     QHBoxLayout *horizontalLayout_2;
+    QPushButton *backUp;
+    QPushButton *importButton;
 
     void setupUi(QWidget *Admin)
     {
@@ -110,6 +112,12 @@ public:
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         horizontalLayout_2->setContentsMargins(1, 1, 1, 1);
+        backUp = new QPushButton(Admin);
+        backUp->setObjectName(QString::fromUtf8("backUp"));
+        backUp->setGeometry(QRect(680, 600, 141, 31));
+        importButton = new QPushButton(Admin);
+        importButton->setObjectName(QString::fromUtf8("importButton"));
+        importButton->setGeometry(QRect(850, 600, 121, 31));
 
         retranslateUi(Admin);
 
@@ -143,6 +151,8 @@ public:
         totalMessages->setToolTip(QCoreApplication::translate("Admin", "<html><head/><body><p align=\"center\"><br/></p></body></html>", nullptr));
 #endif // QT_CONFIG(tooltip)
         totalMessages->setText(QCoreApplication::translate("Admin", "<html><head/><body><p align=\"center\">\320\222\321\201\320\265\320\263\320\276 \320\277\320\270\321\201\320\265\320\274 \320\262 \321\201\320\270\321\201\321\202\320\265\320\274\320\265:</p></body></html>", nullptr));
+        backUp->setText(QCoreApplication::translate("Admin", "BackUp", nullptr));
+        importButton->setText(QCoreApplication::translate("Admin", "Import", nullptr));
     } // retranslateUi
 
 };
