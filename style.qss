@@ -1,0 +1,352 @@
+/*-----QWidget-----*/
+QWidget
+{
+        background-color: #212427;
+        color: #dedbd8;
+        border-color: #000000;
+
+}
+
+
+/*-----QLabel-----*/
+QLabel
+{
+        background-color: #212427;
+        color: #fff;
+        border-color: #000000;
+
+}
+
+
+/*-----QPushButton-----*/
+QPushButton
+{
+        background-color: #BAD1D9;
+        color: #000000;
+        font-weight: bold;
+        border-style: solid;
+        border-width: 1px;
+        border-radius: 10px;
+        border-color: #BAD1D9;
+
+
+}
+
+
+QPushButton::hover
+{
+        background-color: #e6e6fa;
+        color: #000000;
+
+}
+
+
+QPushButton::pressed
+{
+        background-color: #86aebc;
+        color: #fff;
+
+}
+
+
+/*-----QToolButton-----*/
+QToolButton
+{
+        background-color: #212427;
+        color: #fff;
+        border-style: solid;
+        border-color: #BAD1D9;
+
+}
+
+
+QToolButton::hover
+{
+        background-color: #e6e6fa;
+        color: #000000;
+        padding: 2px;
+        border-radius: 15px;
+        border-color: #BAD1D9;
+
+}
+
+
+QToolButton::pressed
+{
+        background-color: #86aebc;
+        color: #000000;
+        border-style: solid;
+        border-width: 2px;
+
+}
+
+QLineEdit{
+        background-color: #414346;
+        color: #fff;
+        font-weight: bold;
+        border-style: solid;
+        border-radius: 5px;
+
+        }
+
+QTableView {
+        background-color: #212427;
+        color: #fff;
+        border-color: #000000;
+}
+
+
+
+/*-----QCheckBox-----*/
+QCheckBox
+{
+        background-color: transparent;
+        color: #b9b9bb;
+        font-weight: bold;
+
+}
+
+
+QCheckBox::indicator
+{
+    color: #b1b1b1;
+    background-color: #00111d;
+    border: 1px solid #f0742f;
+    width: 12px;
+    height: 12px;
+
+}
+
+
+QCheckBox::indicator:checked
+{
+    image:url("./ressources/check.png"); /*To replace*/
+        background-color: #1f2b2b;
+    border: 1px solid #f0742f;
+
+}
+
+
+QCheckBox::indicator:unchecked:hover
+{
+    border: 1px solid #f0742f;
+
+}
+
+
+QCheckBox::disabled
+{
+        color: #656565;
+
+}
+
+
+QCheckBox::indicator:disabled
+{
+        background-color: #656565;
+        color: #656565;
+    border: 1px solid #656565;
+
+}
+
+
+QCheckBox::indicator:checked
+{
+    image:url("./ressources/check.png"); /*To replace*/
+        background-color: #d10000;
+    border: 1px solid #d10000;
+
+}
+
+
+QCheckBox::indicator:unchecked:hover
+{
+    border: 1px solid #ff0000;
+
+}
+
+
+QCheckBox::disabled
+{
+        color: #656565;
+
+}
+
+
+QCheckBox::indicator:disabled
+{
+        background-color: #656565;
+        color: #656565;
+    border: 1px solid #656565;
+
+}
+
+/*-----QListView-----*/
+QListView
+{
+        background-color: transparent;
+        color: #000;
+        border: 0px solid;
+        border-radius: 2px;
+        font-weight: bold;
+
+}
+
+
+QListView::item
+{
+    padding: 5px;
+
+}
+
+
+QListView::item:selected
+{
+    border: 1px solid #1ea2ff;
+    border-radius: 2px;
+    color: #fff;
+}
+
+
+QListView::item:selected:!active
+{
+    background-color: #1ea2ff;
+    border-radius: 2px;
+    color: #fff;
+
+}
+
+
+QListView::item:selected:active
+{
+    background-color: #1ea2ff;
+    border-radius: 2px;
+    color: #fff;
+
+}
+
+
+QListView::item:hover
+{
+    background-color: #8b8b8b;
+        margin: 0px;
+    border-radius: 2px;
+
+}
+
+
+/*-----QScrollBar-----*/
+QScrollBar:vertical
+{
+        border-radius : 5px;
+        width: 10px;
+
+}
+
+
+QScrollBar:horizontal
+{
+        border-radius : 5px;
+        height: 10px;
+
+}
+
+
+QScrollBar::handle:vertical,
+QScrollBar::handle:horizontal
+{
+        border-radius : 5px;
+        background-color: #1ea2ff;
+        min-height: 80px;
+        width : 12px;
+
+}
+
+
+QScrollBar::handle:vertical:hover,
+QScrollBar::handle:horizontal:hover
+{
+        background-color: #1988d6;
+
+}
+
+
+QScrollBar::add-line:vertical,
+QScrollBar::add-line:horizontal
+{
+        background: transparent;
+        height: 0px;
+        subcontrol-position: bottom;
+        subcontrol-origin: margin;
+
+}
+
+
+QScrollBar::add-line:vertical:hover,
+QScrollBar::add-line:horizontal:hover
+{
+        background-color: transparent;
+
+}
+
+
+QScrollBar::add-line:vertical:pressed,
+QScrollBar::add-line:horizontal:pressed
+{
+        background-color: #3f3f3f;
+
+}
+
+
+QScrollBar::sub-line:vertical,
+QScrollBar::sub-line:horizontal
+{
+        background: transparent;
+        height: 0px;
+
+}
+
+
+QScrollBar::sub-line:vertical:hover,
+QScrollBar::sub-line:horizontal:hover
+{
+        background-color: transparent;
+
+}
+
+
+QScrollBar::sub-line:vertical:pressed,
+QScrollBar::sub-line:horizontal:pressed
+{
+        background-color: #3f3f3f;
+
+}
+
+
+QScrollBar::up-arrow:vertical,
+QScrollBar::up-arrow:horizontal
+{
+        width: 0px;
+        height: 0px;
+        background: transparent;
+
+}
+
+
+QScrollBar::down-arrow:vertical,
+QScrollBar::down-arrow:horizontal
+{
+        width: 0px;
+        height: 0px;
+        background: transparent;
+
+}
+
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical,
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal
+{
+        background-color: white;
+
+}
+
