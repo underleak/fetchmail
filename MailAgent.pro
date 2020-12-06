@@ -12,16 +12,20 @@ CONFIG += c++11
 
 SOURCES += \
     admin.cpp \
+    database.cpp \
     main.cpp \
     login.cpp \
     messages.cpp \
-    registration.cpp
+    registration.cpp \
+    statistics.cpp
 
 HEADERS += \
     admin.h \
+    database.h \
     login.h \
     messages.h \
-    registration.h
+    registration.h \
+    statistics.h
 
 FORMS += \
     admin.ui \

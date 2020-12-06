@@ -43,11 +43,6 @@ public:
     QHBoxLayout *horizontalLayout;
     QFrame *verticalBarChart;
     QHBoxLayout *horizontalLayout_2;
-    QFrame *horizontalBarChart;
-    QHBoxLayout *horizontalLayout_3;
-    QLabel *label;
-    QLabel *label_2;
-    QLabel *label_3;
 
     void setupUi(QWidget *Admin)
     {
@@ -59,7 +54,7 @@ public:
         lineEdit->setGeometry(QRect(420, 570, 120, 25));
         tableView = new QTableView(Admin);
         tableView->setObjectName(QString::fromUtf8("tableView"));
-        tableView->setGeometry(QRect(70, 300, 741, 251));
+        tableView->setGeometry(QRect(70, 300, 750, 250));
         tableView->setSortingEnabled(true);
         getTable = new QPushButton(Admin);
         getTable->setObjectName(QString::fromUtf8("getTable"));
@@ -103,39 +98,18 @@ public:
         totalMessages->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);"));
         donutPieChart = new QFrame(Admin);
         donutPieChart->setObjectName(QString::fromUtf8("donutPieChart"));
-        donutPieChart->setGeometry(QRect(0, 50, 250, 250));
+        donutPieChart->setGeometry(QRect(70, 0, 375, 300));
         horizontalLayout = new QHBoxLayout(donutPieChart);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(1, 1, 1, 1);
         verticalBarChart = new QFrame(Admin);
         verticalBarChart->setObjectName(QString::fromUtf8("verticalBarChart"));
-        verticalBarChart->setGeometry(QRect(250, 50, 350, 250));
+        verticalBarChart->setGeometry(QRect(445, 0, 375, 300));
         horizontalLayout_2 = new QHBoxLayout(verticalBarChart);
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         horizontalLayout_2->setContentsMargins(1, 1, 1, 1);
-        horizontalBarChart = new QFrame(Admin);
-        horizontalBarChart->setObjectName(QString::fromUtf8("horizontalBarChart"));
-        horizontalBarChart->setGeometry(QRect(600, 50, 300, 250));
-        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(horizontalBarChart->sizePolicy().hasHeightForWidth());
-        horizontalBarChart->setSizePolicy(sizePolicy);
-        horizontalLayout_3 = new QHBoxLayout(horizontalBarChart);
-        horizontalLayout_3->setSpacing(6);
-        horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        horizontalLayout_3->setContentsMargins(1, 1, 1, 1);
-        label = new QLabel(Admin);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(140, 177, 25, 20));
-        label_2 = new QLabel(Admin);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(100, 60, 130, 13));
-        label_3 = new QLabel(Admin);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setGeometry(QRect(390, 60, 130, 13));
 
         retranslateUi(Admin);
 
@@ -169,9 +143,6 @@ public:
         totalMessages->setToolTip(QCoreApplication::translate("Admin", "<html><head/><body><p align=\"center\"><br/></p></body></html>", nullptr));
 #endif // QT_CONFIG(tooltip)
         totalMessages->setText(QCoreApplication::translate("Admin", "<html><head/><body><p align=\"center\">\320\222\321\201\320\265\320\263\320\276 \320\277\320\270\321\201\320\265\320\274 \320\262 \321\201\320\270\321\201\321\202\320\265\320\274\320\265:</p></body></html>", nullptr));
-        label->setText(QCoreApplication::translate("Admin", "23%", nullptr));
-        label_2->setText(QCoreApplication::translate("Admin", "\320\224\320\276\320\273\321\217 \321\201\320\276\320\276\320\261\321\211\320\265\320\275\320\270\320\271 \320\262 \320\261\320\260\320\267\320\265:", nullptr));
-        label_3->setText(QCoreApplication::translate("Admin", "\320\227\320\260\320\277\320\276\320\273\320\275\320\265\320\275\320\275\320\276\321\201\321\202\321\214 \320\277\321\200\320\276\321\204\320\270\320\273\321\217:", nullptr));
     } // retranslateUi
 
 };

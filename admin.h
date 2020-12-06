@@ -6,19 +6,11 @@
 #include <QSqlRecord>
 #include <QSqlQuery>
 #include <QString>
-#include <QtCharts/QLineSeries>
 #include <QSqlTableModel>
+#include "database.h"
+#include "statistics.h"
 
-#include <QChartView>
-#include <QPieSeries>
-#include <QPieSlice>
-#include <QBarSet>
-#include <QStackedBarSeries>
-#include <QBarCategoryAxis>
-#include <QValueAxis>
-#include <QHorizontalPercentBarSeries>
-
-using namespace QtCharts;
+class Statistics;
 
 namespace Ui {
 class Admin;
@@ -34,14 +26,12 @@ public:
     ~Admin();
 
 private:
-
-    Ui::Admin *ui;
     void getOverview();
-    QSqlQuery query;
-    QSqlRecord record;
+    Ui::Admin *ui;
     QString findStat;
-    QString acc_ID;
     QSqlTableModel *model;
+    Database *database;
+    Statistics *statistics;
 
 private slots:
     void on_getTable_clicked();
@@ -52,10 +42,6 @@ private slots:
     void on_verifyAll_clicked();
     void on_deleteAllMessages_clicked();
     void updateTable();
-    void updateStats();
-    void getDonutPieChart();
-    void getVerticalBarChart();
-    void getHorizontalBarChart();
 };
 
 #endif // ADMIN_H

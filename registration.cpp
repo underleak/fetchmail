@@ -11,6 +11,8 @@ Registration::Registration(QWidget *parent) :
     ui->textLogin->setMaxLength(35);
     ui->textPassword->setMaxLength(20);
     ui->textPassword->setEchoMode(QLineEdit::Password);
+
+    database = new Database();
 }
 
 Registration::~Registration()
@@ -34,11 +36,10 @@ void Registration::on_signUp_clicked()
         return;
     }
 
-    QSqlQuery quary = QSqlQuery(Login::get_db());
-    quary.exec("SELECT * FROM auth WHERE login = '" + login + "'");
+    database->query.exec("SELECT * FROM auth WHERE login = '" + login + "'");
 
-    if (!quary.size())
-        quary.exec("INSERT INTO auth (login, password) VALUES ('" + login + "', '" + password + "')");
+    if (!database->query.size())
+        database->query.exec("INSERT INTO auth (login, password) VALUES ('" + login + "', '" + password + "')");
     else
         QMessageBox::critical(this, "Ошибка регистрации", "Пользователь с таким именем уже существует.", QMessageBox::Ok);
 }

@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QSqlError>
 #include <QMessageBox>
+#include "database.h"
 
 namespace Ui {
 class Registration;
@@ -30,6 +31,7 @@ private slots:
 
 private:
     Ui::Registration *ui;
+    Database *database;
 };
 
 #endif // REGISTRATION_H

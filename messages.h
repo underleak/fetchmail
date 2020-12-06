@@ -7,6 +7,7 @@
 #include <QSqlQuery>
 #include <QSqlRecord>
 #include <QFont>
+#include "database.h"
 
 
 namespace Ui {
@@ -30,12 +31,13 @@ public:
 private:
     Ui::Messages *ui;
     QListWidget *listWidget;
-    QSqlQuery query;
     QString zapros;
     QSqlRecord rec;
+    Database *database;
     void refresh();
     void getStats();
     void updateInfo();
+
 
 
 

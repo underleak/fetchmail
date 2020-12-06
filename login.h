@@ -16,6 +16,7 @@
 #include "registration.h"
 #include "messages.h"
 #include "admin.h"
+#include "database.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Login; }
@@ -28,7 +29,6 @@ class Login : public QMainWindow
 public:
     Login(QWidget *parent = nullptr);
     ~Login();
-    static QSqlDatabase& get_db();
 
 private slots:
     void on_sign_In_clicked();
@@ -41,6 +41,7 @@ private:
     Registration *registration;
     Messages *msg;
     Admin *adm;
+    Database *database;
 
 signals:
     void next();

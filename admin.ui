@@ -28,8 +28,8 @@
     <rect>
      <x>70</x>
      <y>300</y>
-     <width>741</width>
-     <height>251</height>
+     <width>750</width>
+     <height>250</height>
     </rect>
    </property>
    <property name="sortingEnabled">
@@ -217,10 +217,10 @@
   <widget class="QFrame" name="donutPieChart">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>50</y>
-     <width>250</width>
-     <height>250</height>
+     <x>70</x>
+     <y>0</y>
+     <width>375</width>
+     <height>300</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
@@ -244,10 +244,10 @@
   <widget class="QFrame" name="verticalBarChart">
    <property name="geometry">
     <rect>
-     <x>250</x>
-     <y>50</y>
-     <width>350</width>
-     <height>250</height>
+     <x>445</x>
+     <y>0</y>
+     <width>375</width>
+     <height>300</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -267,78 +267,6 @@
      <number>1</number>
     </property>
    </layout>
-  </widget>
-  <widget class="QFrame" name="horizontalBarChart">
-   <property name="geometry">
-    <rect>
-     <x>600</x>
-     <y>50</y>
-     <width>300</width>
-     <height>250</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_3">
-    <property name="spacing">
-     <number>6</number>
-    </property>
-    <property name="leftMargin">
-     <number>1</number>
-    </property>
-    <property name="topMargin">
-     <number>1</number>
-    </property>
-    <property name="rightMargin">
-     <number>1</number>
-    </property>
-    <property name="bottomMargin">
-     <number>1</number>
-    </property>
-   </layout>
-  </widget>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>140</x>
-     <y>177</y>
-     <width>25</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>23%</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>100</x>
-     <y>60</y>
-     <width>130</width>
-     <height>13</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Доля сообщений в базе:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_3">
-   <property name="geometry">
-    <rect>
-     <x>390</x>
-     <y>60</y>
-     <width>130</width>
-     <height>13</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Заполненность профиля:</string>
-   </property>
   </widget>
  </widget>
  <resources/>

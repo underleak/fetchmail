@@ -22,7 +22,9 @@ Messages::Messages(QWidget *parent) :
     this->setFixedSize(1000,700);
     listWidget =new QListWidget(this);
     listWidget->setFixedSize(300,500);
-    query = QSqlQuery(Login::get_db());
+
+    database = new Database();
+
     QFont fonts("Helvetica", 12, QFont::Bold);
     listWidget->setFont(fonts);
 
@@ -59,18 +61,18 @@ void Messages::display (QListWidgetItem * msg)
     int counter=0;
     //query.next() дает переход на новыую строчку
     //query.value(2) берет все значения из 2 колонки таблицы
-    query.exec(zapros + QString::number(this->acc_id));
-    rec = query.record();
-    while (query.next()) {
+    database->query.exec(zapros + QString::number(this->acc_id));
+    rec = database->query.record();
+    while (database->query.next()) {
         counter++;
-        if(counter==(listWidget->row(msg)+1)) ui->textBrowser->setText(" Theme: " + query.value(rec.indexOf("theme")).toString()+ "\n From:" +
-                                                                       query.value(rec.indexOf("from")).toString() + "\n To:" +query.value(rec.indexOf("to")).toString() +
-                                                                       "\n Date:  " + query.value(rec.indexOf("date")).toString() + "\n\n" + query.value(rec.indexOf("text")).toString());
+        if(counter==(listWidget->row(msg)+1)) ui->textBrowser->setText(" Theme: " + database->query.value(rec.indexOf("theme")).toString()+ "\n From:" +
+                                                                       database->query.value(rec.indexOf("from")).toString() + "\n To:" +database->query.value(rec.indexOf("to")).toString() +
+                                                                       "\n Date:  " + database->query.value(rec.indexOf("date")).toString() + "\n\n" + database->query.value(rec.indexOf("text")).toString());
 
     }
 
     //qDebug()<<this->acc_id;
-    query.clear();
+    database->query.clear();
     rec.clear();
 
 }
@@ -79,27 +81,27 @@ void Messages::refresh()
 {
 
     listWidget->clear();
-    query.exec(zapros + QString::number(this->acc_id));
-    rec = query.record();
+    database->query.exec(zapros + QString::number(this->acc_id));
+    rec = database->query.record();
 
 
     int count=0;
-    while (query.next()) {
+    while (database->query.next()) {
         count++;
         QListWidgetItem *newItem = new QListWidgetItem;
-        newItem->setText( "\n Theme: " + query.value(rec.indexOf("theme")).toString()+ "\n From:" +
-                          query.value(rec.indexOf("from")).toString() +
-                          "\n Date:  " + query.value(rec.indexOf("date")).toString() + "\n");
+        newItem->setText( "\n Theme: " + database->query.value(rec.indexOf("theme")).toString()+ "\n From:" +
+                          database->query.value(rec.indexOf("from")).toString() +
+                          "\n Date:  " + database->query.value(rec.indexOf("date")).toString() + "\n");
         listWidget->insertItem(count, newItem);
-        newItem->setData(Qt::UserRole,query.value(rec.indexOf("msg_id")).toInt());
+        newItem->setData(Qt::UserRole,database->query.value(rec.indexOf("msg_id")).toInt());
 
     }
 
-    query.first();
-    ui->loginLabel->setText("Почта: " +  query.value(rec.indexOf("to")).toString());
+    database->query.first();
+    ui->loginLabel->setText("Почта: " +  database->query.value(rec.indexOf("to")).toString());
     ui->msgsAmountLBL->setText("Всего полученно писем: " + QString::number(count));
     rec.clear();
-    query.clear();
+    database->query.clear();
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -122,10 +124,10 @@ void Messages::refresh()
 void Messages::shortDisplay()
 {
 
-    query.exec (zapros + QString::number(this->acc_id));
-    rec = query.record();
+    database->query.exec (zapros + QString::number(this->acc_id));
+    rec = database->query.record();
     refresh();
-    query.clear();
+    database->query.clear();
     rec.clear();
 
 
@@ -145,7 +147,7 @@ void Messages::on_refreshButton_clicked()
 void Messages::on_hideButton_clicked()
 {
 
-    query.clear();
+    database->query.clear();
     QString deleteQuery;
 
     QList <QListWidgetItem *> list = listWidget->selectedItems();
@@ -159,12 +161,12 @@ void Messages::on_hideButton_clicked()
         int tmp=listWidget->row(*itt);
         ptr = listWidget->item(tmp);
         deleteQuery = "delete from data where msg_id = " + ptr->data(Qt::UserRole).toString();
-        query.exec(deleteQuery);
+        database->query.exec(deleteQuery);
         qDebug()<<deleteQuery;
         itt++;
 
     }
-    query.clear();
+    database->query.clear();
     refresh();
 
     listWidget->setSelectionMode(QAbstractItemView::SingleSelection);
