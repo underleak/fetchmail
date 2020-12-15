@@ -45,26 +45,22 @@ void Login::on_signIn_clicked()
     database->query.first();
     QSqlRecord record = database->query.record();
 
-    if (login.isEmpty() || password.isEmpty())
-    {
+    if (login.isEmpty() || password.isEmpty()){
         QMessageBox::critical(this, "Ошибка входа", "Пожалуйста, введите логин и пароль.", QMessageBox::Ok);
         return;
     }
 
-    if  (!database->query.size())
-    {
+    if  (!database->query.size()){
         QMessageBox::critical(this, "Ошибка входа", "Неправильный логин или пароль.", QMessageBox::Ok);
         return;
     }
 
-    if (database->query.value(record.indexOf("isBlocked")).toString() == "1")
-    {
+    if (database->query.value(record.indexOf("isBlocked")).toString() == "1"){
         QMessageBox::critical(this, "Ошибка входа", "Ваш профиль был заблокирован, обратитесь в службу поддержки.", QMessageBox::Ok);
         return;
     }
 
-    if (database->query.value(record.indexOf("isVerifed")).toString() == "0")
-    {
+    if (database->query.value(record.indexOf("isVerified")).toString() == "0"){
         QMessageBox::critical(this, "Ошибка входа", "Ваш профиль еще не активирован, подождите, пока администратор подтвердит регистрацию.", QMessageBox::Ok);
         return;
     }

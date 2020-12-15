@@ -16,9 +16,9 @@
   <widget class="QTextBrowser" name="textBrowser">
    <property name="geometry">
     <rect>
-     <x>300</x>
+     <x>350</x>
      <y>0</y>
-     <width>700</width>
+     <width>650</width>
      <height>500</height>
     </rect>
    </property>
@@ -101,19 +101,6 @@
    </property>
    <property name="text">
     <string>avatar</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="loginLabel">
-   <property name="geometry">
-    <rect>
-     <x>570</x>
-     <y>550</y>
-     <width>171</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>loginLabel</string>
    </property>
   </widget>
   <widget class="QLabel" name="nameLBL">
@@ -223,7 +210,7 @@
   <widget class="QToolButton" name="toolButton">
    <property name="geometry">
     <rect>
-     <x>875</x>
+     <x>885</x>
      <y>660</y>
      <width>24</width>
      <height>19</height>
@@ -237,16 +224,27 @@
    </property>
   </widget>
   <widget class="QPushButton" name="accSet">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
-     <x>750</x>
+     <x>760</x>
      <y>660</y>
      <width>121</width>
      <height>24</height>
     </rect>
    </property>
+   <property name="layoutDirection">
+    <enum>Qt::RightToLeft</enum>
+   </property>
    <property name="text">
     <string>Управление</string>
+   </property>
+   <property name="icon">
+    <iconset>
+     <selectedon>:/icon/main/downArrow.svg</selectedon>
+    </iconset>
    </property>
   </widget>
  </widget>

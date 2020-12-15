@@ -10,6 +10,7 @@
 #define UI_MESSAGES_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
@@ -29,7 +30,6 @@ public:
     QPushButton *hideButton;
     QPushButton *choiceButton;
     QLabel *avatar;
-    QLabel *loginLabel;
     QLabel *nameLBL;
     QLabel *surnameLBL;
     QLabel *dateBirthLBL;
@@ -48,7 +48,7 @@ public:
         Messages->resize(1000, 700);
         textBrowser = new QTextBrowser(Messages);
         textBrowser->setObjectName(QString::fromUtf8("textBrowser"));
-        textBrowser->setGeometry(QRect(300, 0, 700, 500));
+        textBrowser->setGeometry(QRect(350, 0, 650, 500));
         textBrowser->setReadOnly(true);
         refreshButton = new QPushButton(Messages);
         refreshButton->setObjectName(QString::fromUtf8("refreshButton"));
@@ -69,9 +69,6 @@ public:
         avatar->setObjectName(QString::fromUtf8("avatar"));
         avatar->setGeometry(QRect(759, 510, 150, 140));
         avatar->setStyleSheet(QString::fromUtf8("border-radius:5px;"));
-        loginLabel = new QLabel(Messages);
-        loginLabel->setObjectName(QString::fromUtf8("loginLabel"));
-        loginLabel->setGeometry(QRect(570, 550, 171, 16));
         nameLBL = new QLabel(Messages);
         nameLBL->setObjectName(QString::fromUtf8("nameLBL"));
         nameLBL->setGeometry(QRect(316, 519, 27, 16));
@@ -101,11 +98,16 @@ public:
         applyChanges->setGeometry(QRect(440, 620, 80, 24));
         toolButton = new QToolButton(Messages);
         toolButton->setObjectName(QString::fromUtf8("toolButton"));
-        toolButton->setGeometry(QRect(875, 660, 24, 19));
+        toolButton->setGeometry(QRect(885, 660, 24, 19));
         toolButton->setCursor(QCursor(Qt::PointingHandCursor));
         accSet = new QPushButton(Messages);
         accSet->setObjectName(QString::fromUtf8("accSet"));
-        accSet->setGeometry(QRect(750, 660, 121, 24));
+        accSet->setEnabled(true);
+        accSet->setGeometry(QRect(760, 660, 121, 24));
+        accSet->setLayoutDirection(Qt::RightToLeft);
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(":/icon/main/downArrow.svg"), QSize(), QIcon::Selected, QIcon::On);
+        accSet->setIcon(icon);
 
         retranslateUi(Messages);
 
@@ -120,7 +122,6 @@ public:
         hideButton->setText(QCoreApplication::translate("Messages", "Hide", nullptr));
         choiceButton->setText(QCoreApplication::translate("Messages", "Choose", nullptr));
         avatar->setText(QCoreApplication::translate("Messages", "avatar", nullptr));
-        loginLabel->setText(QCoreApplication::translate("Messages", "loginLabel", nullptr));
         nameLBL->setText(QCoreApplication::translate("Messages", "\320\230\320\274\321\217", nullptr));
         surnameLBL->setText(QCoreApplication::translate("Messages", "\320\244\320\260\320\274\320\270\320\273\320\270\321\217", nullptr));
         dateBirthLBL->setText(QCoreApplication::translate("Messages", "\320\224\320\260\321\202\320\260 \321\200\320\276\320\266\320\264\320\265\320\275\320\270\321\217", nullptr));

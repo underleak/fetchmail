@@ -8,7 +8,7 @@ Database::Database()
 QSqlDatabase& Database::getDatabase()
 {
     static QSqlDatabase database = QSqlDatabase::addDatabase("QMYSQL");
-    database.setHostName("127.0.0.1");
+    database.setHostName("localhost");
     database.setDatabaseName("mail");
     database.setUserName("root");
     database.setPassword("12345");

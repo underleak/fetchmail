@@ -10,6 +10,7 @@
 #define UI_ADMIN_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QComboBox>
 #include <QtWidgets/QFrame>
@@ -50,26 +51,47 @@ public:
     {
         if (Admin->objectName().isEmpty())
             Admin->setObjectName(QString::fromUtf8("Admin"));
-        Admin->resize(1000, 700);
+        Admin->setWindowModality(Qt::NonModal);
+        Admin->resize(1044, 700);
+        QFont font;
+        font.setPointSize(12);
+        font.setStyleStrategy(QFont::PreferDefault);
+        Admin->setFont(font);
+        Admin->setContextMenuPolicy(Qt::DefaultContextMenu);
+        Admin->setToolTipDuration(-1);
+        Admin->setLayoutDirection(Qt::LeftToRight);
+        Admin->setInputMethodHints(Qt::ImhNone);
         lineEdit = new QLineEdit(Admin);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
         lineEdit->setGeometry(QRect(420, 570, 120, 25));
         tableView = new QTableView(Admin);
         tableView->setObjectName(QString::fromUtf8("tableView"));
-        tableView->setGeometry(QRect(70, 300, 750, 250));
+        tableView->setGeometry(QRect(50, 300, 750, 250));
         tableView->setSortingEnabled(true);
         getTable = new QPushButton(Admin);
         getTable->setObjectName(QString::fromUtf8("getTable"));
         getTable->setGeometry(QRect(550, 570, 40, 25));
         submitChanges = new QPushButton(Admin);
         submitChanges->setObjectName(QString::fromUtf8("submitChanges"));
-        submitChanges->setGeometry(QRect(410, 640, 111, 31));
+        submitChanges->setGeometry(QRect(410, 640, 121, 31));
+        submitChanges->setLayoutDirection(Qt::RightToLeft);
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(":/icon/main/checkmark.png"), QSize(), QIcon::Selected, QIcon::On);
+        submitChanges->setIcon(icon);
         deleteSelectedRows = new QPushButton(Admin);
         deleteSelectedRows->setObjectName(QString::fromUtf8("deleteSelectedRows"));
         deleteSelectedRows->setGeometry(QRect(680, 640, 141, 31));
+        deleteSelectedRows->setLayoutDirection(Qt::RightToLeft);
+        QIcon icon1;
+        icon1.addFile(QString::fromUtf8(":/icon/main/trash.png"), QSize(), QIcon::Selected, QIcon::On);
+        deleteSelectedRows->setIcon(icon1);
         updatePage = new QPushButton(Admin);
         updatePage->setObjectName(QString::fromUtf8("updatePage"));
-        updatePage->setGeometry(QRect(130, 640, 101, 31));
+        updatePage->setGeometry(QRect(130, 640, 111, 31));
+        updatePage->setLayoutDirection(Qt::RightToLeft);
+        QIcon icon2;
+        icon2.addFile(QString::fromUtf8(":/icon/main/renew.png"), QSize(), QIcon::Selected, QIcon::On);
+        updatePage->setIcon(icon2);
         comboBox = new QComboBox(Admin);
         comboBox->addItem(QString());
         comboBox->addItem(QString());
@@ -79,47 +101,115 @@ public:
         comboBox->setGeometry(QRect(70, 570, 331, 25));
         unblockAll = new QPushButton(Admin);
         unblockAll->setObjectName(QString::fromUtf8("unblockAll"));
-        unblockAll->setGeometry(QRect(830, 420, 160, 30));
+        unblockAll->setGeometry(QRect(819, 430, 171, 30));
+        unblockAll->setLayoutDirection(Qt::RightToLeft);
+        QIcon icon3;
+        icon3.addFile(QString::fromUtf8(":/icon/main/unlockAll.png"), QSize(), QIcon::Selected, QIcon::On);
+        unblockAll->setIcon(icon3);
         verifyAll = new QPushButton(Admin);
         verifyAll->setObjectName(QString::fromUtf8("verifyAll"));
-        verifyAll->setGeometry(QRect(830, 320, 160, 30));
+        verifyAll->setGeometry(QRect(819, 330, 171, 30));
+        verifyAll->setLayoutDirection(Qt::RightToLeft);
+        verifyAll->setIcon(icon);
         deleteAllMessages = new QPushButton(Admin);
         deleteAllMessages->setObjectName(QString::fromUtf8("deleteAllMessages"));
-        deleteAllMessages->setGeometry(QRect(830, 520, 160, 30));
+        deleteAllMessages->setGeometry(QRect(819, 530, 171, 30));
+        deleteAllMessages->setLayoutDirection(Qt::RightToLeft);
+        deleteAllMessages->setIcon(icon1);
         unverifiedUsers = new QLabel(Admin);
         unverifiedUsers->setObjectName(QString::fromUtf8("unverifiedUsers"));
-        unverifiedUsers->setGeometry(QRect(830, 290, 160, 30));
-        unverifiedUsers->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);"));
+        unverifiedUsers->setGeometry(QRect(820, 300, 171, 30));
+        unverifiedUsers->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
         blockedUsers = new QLabel(Admin);
         blockedUsers->setObjectName(QString::fromUtf8("blockedUsers"));
-        blockedUsers->setGeometry(QRect(830, 390, 160, 30));
-        blockedUsers->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);"));
+        blockedUsers->setGeometry(QRect(810, 400, 181, 30));
+        blockedUsers->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
         totalMessages = new QLabel(Admin);
         totalMessages->setObjectName(QString::fromUtf8("totalMessages"));
-        totalMessages->setGeometry(QRect(830, 490, 160, 30));
-        totalMessages->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);"));
+        totalMessages->setGeometry(QRect(810, 500, 181, 30));
+        totalMessages->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
         donutPieChart = new QFrame(Admin);
         donutPieChart->setObjectName(QString::fromUtf8("donutPieChart"));
-        donutPieChart->setGeometry(QRect(70, 0, 375, 300));
+        donutPieChart->setGeometry(QRect(50, 0, 375, 300));
+        donutPieChart->setStyleSheet(QString::fromUtf8(" background-color: #212427;\n"
+""));
         horizontalLayout = new QHBoxLayout(donutPieChart);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(1, 1, 1, 1);
         verticalBarChart = new QFrame(Admin);
         verticalBarChart->setObjectName(QString::fromUtf8("verticalBarChart"));
-        verticalBarChart->setGeometry(QRect(445, 0, 375, 300));
+        verticalBarChart->setGeometry(QRect(480, 0, 375, 300));
+        verticalBarChart->setStyleSheet(QString::fromUtf8(" background-color: #212427;"));
         horizontalLayout_2 = new QHBoxLayout(verticalBarChart);
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         horizontalLayout_2->setContentsMargins(1, 1, 1, 1);
         backUp = new QPushButton(Admin);
         backUp->setObjectName(QString::fromUtf8("backUp"));
-        backUp->setGeometry(QRect(680, 600, 141, 31));
+        backUp->setGeometry(QRect(680, 599, 141, 33));
+        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(backUp->sizePolicy().hasHeightForWidth());
+        backUp->setSizePolicy(sizePolicy);
+        backUp->setSizeIncrement(QSize(0, 0));
+        backUp->setBaseSize(QSize(0, 0));
+        QFont font1;
+        font1.setPointSize(13);
+        font1.setBold(false);
+        font1.setUnderline(false);
+        font1.setWeight(50);
+        font1.setStrikeOut(false);
+        font1.setKerning(false);
+        font1.setStyleStrategy(QFont::PreferDefault);
+        backUp->setFont(font1);
+        backUp->setMouseTracking(false);
+        backUp->setTabletTracking(false);
+        backUp->setFocusPolicy(Qt::StrongFocus);
+        backUp->setContextMenuPolicy(Qt::NoContextMenu);
+        backUp->setAcceptDrops(false);
+#if QT_CONFIG(tooltip)
+        backUp->setToolTip(QString::fromUtf8(""));
+#endif // QT_CONFIG(tooltip)
+        backUp->setToolTipDuration(0);
+#if QT_CONFIG(statustip)
+        backUp->setStatusTip(QString::fromUtf8(""));
+#endif // QT_CONFIG(statustip)
+#if QT_CONFIG(whatsthis)
+        backUp->setWhatsThis(QString::fromUtf8(""));
+#endif // QT_CONFIG(whatsthis)
+#if QT_CONFIG(accessibility)
+        backUp->setAccessibleName(QString::fromUtf8(""));
+#endif // QT_CONFIG(accessibility)
+        backUp->setLayoutDirection(Qt::RightToLeft);
+        backUp->setAutoFillBackground(false);
+        backUp->setStyleSheet(QString::fromUtf8(""));
+        QIcon icon4;
+        icon4.addFile(QString::fromUtf8(":/icon/main/downArrow.svg"), QSize(), QIcon::Selected, QIcon::On);
+        backUp->setIcon(icon4);
+        backUp->setIconSize(QSize(14, 14));
+#if QT_CONFIG(shortcut)
+        backUp->setShortcut(QString::fromUtf8(""));
+#endif // QT_CONFIG(shortcut)
+        backUp->setCheckable(false);
+        backUp->setAutoRepeatDelay(301);
+        backUp->setAutoRepeatInterval(99);
+        backUp->setAutoDefault(false);
+        backUp->setFlat(false);
         importButton = new QPushButton(Admin);
         importButton->setObjectName(QString::fromUtf8("importButton"));
-        importButton->setGeometry(QRect(850, 600, 121, 31));
+        importButton->setGeometry(QRect(860, 600, 131, 31));
+        importButton->setContextMenuPolicy(Qt::NoContextMenu);
+        importButton->setAcceptDrops(false);
+        importButton->setLayoutDirection(Qt::RightToLeft);
+        importButton->setIcon(icon4);
+        importButton->setIconSize(QSize(14, 14));
 
         retranslateUi(Admin);
+
+        backUp->setDefault(false);
+
 
         QMetaObject::connectSlotsByName(Admin);
     } // setupUi

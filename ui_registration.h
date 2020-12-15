@@ -10,6 +10,7 @@
 #define UI_REGISTRATION_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
@@ -24,12 +25,12 @@ public:
     QPushButton *showPassword;
     QPushButton *back;
     QPushButton *signUp;
-    QLabel *label;
     QLineEdit *textLogin;
     QLabel *label_2;
     QLabel *label_3;
     QLineEdit *textPassword;
     QPushButton *clear;
+    QLabel *label_4;
 
     void setupUi(QWidget *Registration)
     {
@@ -38,16 +39,19 @@ public:
         Registration->resize(800, 500);
         showPassword = new QPushButton(Registration);
         showPassword->setObjectName(QString::fromUtf8("showPassword"));
-        showPassword->setGeometry(QRect(500, 190, 120, 21));
+        showPassword->setGeometry(QRect(500, 180, 41, 31));
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(":/icon/main/eye.png"), QSize(), QIcon::Selected, QIcon::On);
+        showPassword->setIcon(icon);
         back = new QPushButton(Registration);
         back->setObjectName(QString::fromUtf8("back"));
-        back->setGeometry(QRect(330, 380, 140, 30));
+        back->setGeometry(QRect(340, 380, 140, 30));
+        QIcon icon1;
+        icon1.addFile(QString::fromUtf8(":/icon/main/back.png"), QSize(), QIcon::Selected, QIcon::Off);
+        back->setIcon(icon1);
         signUp = new QPushButton(Registration);
         signUp->setObjectName(QString::fromUtf8("signUp"));
-        signUp->setGeometry(QRect(300, 230, 191, 22));
-        label = new QLabel(Registration);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(0, 0, 800, 30));
+        signUp->setGeometry(QRect(320, 230, 171, 22));
         textLogin = new QLineEdit(Registration);
         textLogin->setObjectName(QString::fromUtf8("textLogin"));
         textLogin->setGeometry(QRect(310, 150, 180, 20));
@@ -62,7 +66,14 @@ public:
         textPassword->setGeometry(QRect(310, 190, 180, 20));
         clear = new QPushButton(Registration);
         clear->setObjectName(QString::fromUtf8("clear"));
-        clear->setGeometry(QRect(330, 256, 138, 31));
+        clear->setGeometry(QRect(390, 260, 41, 41));
+        QIcon icon2;
+        icon2.addFile(QString::fromUtf8(":/icon/main/trash.png"), QSize(), QIcon::Selected, QIcon::On);
+        clear->setIcon(icon2);
+        label_4 = new QLabel(Registration);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+        label_4->setGeometry(QRect(340, 10, 131, 131));
+        label_4->setPixmap(QPixmap(QString::fromUtf8(":/icon/main/envelope_icon.png")));
 
         retranslateUi(Registration);
 
@@ -72,16 +83,13 @@ public:
     void retranslateUi(QWidget *Registration)
     {
         Registration->setWindowTitle(QCoreApplication::translate("Registration", "Form", nullptr));
-        showPassword->setText(QCoreApplication::translate("Registration", "\320\277\320\276\320\272\320\260\320\267\320\260\321\202\321\214 \320\277\320\260\321\200\320\276\320\273\321\214 (icon)", nullptr));
+        showPassword->setText(QString());
         back->setText(QCoreApplication::translate("Registration", "\320\235\320\260\320\267\320\260\320\264", nullptr));
         signUp->setText(QCoreApplication::translate("Registration", "\320\227\320\260\321\200\320\265\320\263\320\265\321\201\321\202\321\200\320\270\321\200\320\276\320\262\320\260\321\202\321\214\321\201\321\217", nullptr));
-#if QT_CONFIG(tooltip)
-        label->setToolTip(QCoreApplication::translate("Registration", "<html><head/><body><p align=\"center\"><br/></p></body></html>", nullptr));
-#endif // QT_CONFIG(tooltip)
-        label->setText(QCoreApplication::translate("Registration", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt;\">\320\237\320\276\320\266\320\260\320\273\321\203\320\271\321\201\321\202\320\260 \320\262\320\262\320\265\320\264\320\270\321\202\320\265 \320\264\320\260\320\275\320\275\321\213\320\265 \321\215\320\273\320\265\320\272\321\202\321\200\320\276\320\275\320\275\320\276\320\271 \320\277\320\276\321\207\321\202\321\213:</span></p></body></html>", nullptr));
         label_2->setText(QCoreApplication::translate("Registration", "\320\233\320\276\320\263\320\270\320\275:", nullptr));
         label_3->setText(QCoreApplication::translate("Registration", "\320\237\320\260\321\200\320\276\320\273\321\214:", nullptr));
-        clear->setText(QCoreApplication::translate("Registration", "\320\236\321\207\320\270\321\201\321\202\320\270\321\202\321\214 ", nullptr));
+        clear->setText(QString());
+        label_4->setText(QString());
     } // retranslateUi
 
 };

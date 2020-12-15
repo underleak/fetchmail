@@ -16,6 +16,7 @@ SOURCES += \
     main.cpp \
     login.cpp \
     messages.cpp \
+    parser.cpp \
     registration.cpp \
     statistics.cpp
 
@@ -24,6 +25,7 @@ HEADERS += \
     database.h \
     login.h \
     messages.h \
+    parser.h \
     registration.h \
     statistics.h
 
@@ -37,3 +39,8 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES +=
+
+RESOURCES += \
+    icons.qrc

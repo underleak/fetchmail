@@ -14,6 +14,7 @@
 #include <QFormLayout>
 #include "database.h"
 #include "login.h"
+#include "parser.h"
 
 namespace Ui { class Messages; }
 
@@ -30,15 +31,15 @@ private:
     Ui::Messages *ui;
     Database *database;
     QListWidget *listWidget;
-    QString zapros;
+    QString queryString;
+    Parser *parser;
     void refresh();
-    void getStats();
     void updateInfo();
 
-public slots:
-    void display (QListWidgetItem *);
+
 
 private slots:
+    void display (QListWidgetItem *);
     void on_refreshButton_clicked();
     void on_hideButton_clicked();
     void on_choiceButton_clicked();

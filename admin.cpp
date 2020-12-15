@@ -5,6 +5,7 @@ Admin::Admin(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Admin)
 {
+    this->setWindowTitle("Админ");
     ui->setupUi(this);
     ui->blockedUsers->setAlignment(Qt::AlignCenter);
     ui->unverifiedUsers->setAlignment(Qt::AlignCenter);
@@ -13,7 +14,6 @@ Admin::Admin(QWidget *parent) :
     database = new Database();
     statistics = new Statistics(ui);
 
-    statistics->updateStats();
     on_getTable_clicked();
     statistics->getDonutPieChart();
     statistics->getVerticalBarChart();
@@ -28,14 +28,14 @@ Admin::Admin(QWidget *parent) :
     connect(structBackUp, SIGNAL(triggered()), this, SLOT(slotStructBackUp()));
     ui->backUp->setMenu(file);
 
-    QMenu *imp = new QMenu();
-    QAction *rmImport = new QAction("Имопрт с перезаписью");
-    QAction *addImp = new QAction("Импорт с дозаписью");
-    imp->addAction(rmImport);
-    imp->addAction(addImp);
-    connect(rmImport, SIGNAL(triggered()), this, SLOT(slotrmImport()));
-    connect(addImp, SIGNAL(triggered()), this, SLOT(slotaddImport()));
-    ui->importButton->setMenu(imp);
+    QMenu *import = new QMenu();
+    QAction *overwiteImport = new QAction("Имопрт с перезаписью");
+    QAction *addImport = new QAction("Импорт с дозаписью");
+    import->addAction(overwiteImport);
+    import->addAction(addImport);
+    connect(overwiteImport, SIGNAL(triggered()), this, SLOT(slotrmImport()));
+    connect(addImport, SIGNAL(triggered()), this, SLOT(slotaddImport()));
+    ui->importButton->setMenu(import);
 }
 
 Admin::~Admin()
@@ -54,27 +54,26 @@ void Admin::on_getTable_clicked()
     model = new QSqlTableModel(this, database->getDatabase());
     model->setEditStrategy(QSqlTableModel::OnManualSubmit);
 
-    if (ui->comboBox->currentIndex() == 0)
+    switch (ui->comboBox->currentIndex()) {
+    case 0:
         model->setTable("auth");
-
-    if (ui->comboBox->currentIndex() == 1)
+        break;
+    case 1:
         model->setTable("data");
-
-    if (ui->comboBox->currentIndex() == 2)
-    {
+        break;
+    case 2:
         model->setTable("auth");
         model->setFilter("acc_ID = " + statistics->acc_ID);
-    }
-
-    if (ui->comboBox->currentIndex() == 3)
-    {
+        break;
+    case 3:
         model->setTable("data");
         model->setFilter("acc_id = " + statistics->acc_ID);
+        break;
     }
 
-    if (!statistics->acc_ID.toInt() && ui->comboBox->currentIndex() > 1)
+    if (!statistics->acc_ID.toInt() && ui->comboBox->currentIndex() > 1){
         QMessageBox::critical(this, "Пользователь не найден", "Пожалуйста, введите существующий логин.", QMessageBox::Ok);
-
+    }
     else {
         model->select();
         ui->tableView->setModel(model);
@@ -164,41 +163,47 @@ QString Admin::on_backUp_clicked()
 
 void Admin::slotFullBackUp()
 {
-    char* systemQuery = "/usr/local/mysql-8.0.21-macos10.15-x86_64/bin/mysqldump -uroot -p20643579 testdb> ";
+    QString systemQuery = "/usr/local/mysql-8.0.21-macos10.15-x86_64/bin/mysqldump -uroot -p20643579 testdb > ";
     QTime time = QTime::currentTime();
     QString tmpTime = time.toString();
+    QString path = on_backUp_clicked();
 
-    QString tmpStr = systemQuery +  on_backUp_clicked() + "/backup" + tmpTime + ".sql";
+    QString tmpStr = systemQuery +  path + "/backup" + tmpTime + ".sql";
     std::string str = tmpStr.toStdString();
     const char* p = str.c_str();
-    qDebug()<<p;
     system(p);
+
+    QString systemQuery2 = "/usr/local/mysql-8.0.21-macos10.15-x86_64/bin/mysqldump -uroot -p20643579 testdb --xml > ";
+    QTime time2 = QTime::currentTime();
+    QString tmpTime2 = time2.toString();
+
+    QString tmpStr2 = systemQuery2 +  path + "/backup" + tmpTime2 + ".xml";
+    std::string str2 = tmpStr2.toStdString();
+    const char* p2 = str2.c_str();
+    system(p2);
 }
 void Admin::slotStructBackUp()
 {
-    char* systemQuery = "/usr/local/mysql-8.0.21-macos10.15-x86_64/bin/mysqldump -t -uroot -p20643579  --no-data testdb --fields-enclosed-by=\\n --fields-terminated-by=, > "; //--xml
-
+    QString systemQuery = "/usr/local/mysql-8.0.21-macos10.15-x86_64/bin/mysqldump  -uroot -p20643579  --no-data testdb > ";
     QTime time = QTime::currentTime();
     QString tmpTime = time.toString();
+    QString path = on_backUp_clicked();
 
-    QString tmpStr = systemQuery +  on_backUp_clicked() + "/backup" + tmpTime + ".csv";
+    QString tmpStr = systemQuery + path  + "/backup" + tmpTime + ".sql";
     std::string str = tmpStr.toStdString();
     const char* p = str.c_str();
-    qDebug()<<p;
-
     system(p);
+
+    QString systemQuery2 = "/usr/local/mysql-8.0.21-macos10.15-x86_64/bin/mysqldump  -uroot -p20643579  --no-data testdb --xml > ";
+    QTime time2 = QTime::currentTime();
+    QString tmpTime2 = time2.toString();
+
+    QString tmpStr2 = systemQuery2 +  path + "/backup" + tmpTime2 + ".xml";
+    std::string str2 = tmpStr2.toStdString();
+    const char* p2 = str2.c_str();
+    system(p2);
 }
 
-//usr/local/mysql-8.0.21-macos10.15-x86_64/bin/mysqldump  -uroot -p20643579  --no-data testdb --xml > /Users/pavelprodanov/Desktop/backup10:19:28.xml
-
-/*
-LOAD DATA  INFILE '/usr/local/mysql/data/auth2.csv'
-INTO TABLE testdb.auth
-FIELDS TERMINATED BY ','
-ENCLOSED BY ''''
-LINES TERMINATED BY '\n'
-IGNORE 1 LINES
-(login, password, isBlocked, isVerifed, avatar,name,surname,dateBirth);*/
 
 void Admin::slotaddImport()
 {
@@ -229,7 +234,7 @@ void Admin::slotaddImport()
             "ENCLOSED BY '''' "
             "LINES TERMINATED BY '\n' "
             "IGNORE 1 LINES "
-            "(login, password, isBlocked, isVerifed, avatar,name,surname,dateBirth)";
+            "(login, password, isBlocked, isVerified, avatar,name,surname,dateBirth)";
     qDebug()<<importStr;
 
     QSqlQuery importQuery = QSqlQuery();
@@ -271,7 +276,7 @@ void Admin::slotrmImport()
             "ENCLOSED BY '''' "
             "LINES TERMINATED BY '\n' "
             "IGNORE 1 LINES "
-            "(login, password, isBlocked, isVerifed, avatar,name,surname,dateBirth)";
+            "(login, password, isBlocked, isVerified, avatar,name,surname,dateBirth)";
     qDebug()<<importStr;
 
     QSqlQuery importQuery = QSqlQuery();
