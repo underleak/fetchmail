@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>500</height>
+    <width>738</width>
+    <height>501</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Login</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton_2">
+   <widget class="QPushButton" name="signUp">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>299</x>
       <y>300</y>
-      <width>230</width>
+      <width>181</width>
       <height>31</height>
      </rect>
     </property>
@@ -30,7 +30,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>240</x>
       <y>180</y>
       <width>47</width>
       <height>20</height>
@@ -40,12 +40,12 @@
      <string>Логин:</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="signIn">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>299</x>
       <y>260</y>
-      <width>230</width>
+      <width>181</width>
       <height>31</height>
      </rect>
     </property>
@@ -53,20 +53,25 @@
      <string>Вход</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_5">
+   <widget class="QPushButton" name="showPassword">
     <property name="geometry">
      <rect>
       <x>490</x>
       <y>220</y>
-      <width>151</width>
-      <height>21</height>
+      <width>41</width>
+      <height>26</height>
      </rect>
     </property>
     <property name="text">
-     <string>показать пароль (icon)</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <selectedon>:/icon/main/eye.png</selectedon>
+     </iconset>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="textLogin">
     <property name="geometry">
      <rect>
       <x>300</x>
@@ -79,9 +84,9 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>250</x>
+      <x>236</x>
       <y>220</y>
-      <width>47</width>
+      <width>61</width>
       <height>20</height>
      </rect>
     </property>
@@ -89,20 +94,31 @@
      <string>Пароль:</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_3">
+   <widget class="QPushButton" name="clear">
     <property name="geometry">
      <rect>
-      <x>290</x>
+      <x>370</x>
       <y>340</y>
-      <width>141</width>
-      <height>31</height>
+      <width>40</width>
+      <height>40</height>
      </rect>
     </property>
     <property name="text">
-     <string>очистить (icon)</string>
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <selectedon>:/icon/main/trash.png</selectedon>
+     </iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>17</width>
+      <height>17</height>
+     </size>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="textPassword">
     <property name="geometry">
      <rect>
       <x>300</x>
@@ -112,8 +128,26 @@
      </rect>
     </property>
    </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>30</y>
+      <width>131</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="icons.qrc">:/icon/main/envelope_icon.png</pixmap>
+    </property>
+   </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

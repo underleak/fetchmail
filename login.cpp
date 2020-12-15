@@ -1,20 +1,19 @@
 #include "login.h"
 #include "ui_login.h"
 
-
-Login::Login(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::Login)
+Login::Login(QWidget *parent):
+      QMainWindow(parent),
+      ui(new Ui::Login)
 {
     ui->setupUi(this);
     this->setWindowTitle("Вход");
+    ui->textPassword->setEchoMode(QLineEdit::Password);
+
+    database = new Database();
     registration = new Registration();
-    msg=new Messages();
-    ui->lineEdit->setEchoMode(QLineEdit::Password);
+    messages = new Messages();
 
     connect(registration, &Registration::back, this, &Login::show);
-
-
 }
 
 Login::~Login()
@@ -22,90 +21,73 @@ Login::~Login()
     delete ui;
 }
 
-
-void Login::on_pushButton_2_clicked()
+void Login::on_signUp_clicked()
 {
     registration->show();
     this->close();
 }
 
-QSqlDatabase& Login::get_db()
+void Login::on_signIn_clicked()
 {
-    static QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName("localhost");
-    db.setDatabaseName("testdb");
-    db.setUserName("root");
-    db.setPassword("20643579");
-    if(!db.open()) qDebug() << db.lastError().text();
+    QString login = ui->textLogin->text();
+    QString password = ui->textPassword->text();
 
-    return db;
-}
-
-void Login::on_pushButton_clicked()
-{
-
-    if (ui->lineEdit->text()=="admin" & ui->lineEdit_2->text()=="admin")
+    if (login == "admin" && password == "admin")
     {
-        adm = new Admin();
+        admin = new Admin();
         this->close();
-        adm->show();
+        admin->show();
         return;
-
     }
 
-    quary = QSqlQuery(Login::get_db());
-    QSqlRecord record;
+    database->query.exec("SELECT * FROM auth WHERE login = '" + login + "' AND password = '" +  password + "'");
 
+    database->query.first();
+    QSqlRecord record = database->query.record();
 
-        quary.exec("SELECT * FROM auth WHERE login = '" + ui->lineEdit_2->text() + "' AND password = '" +  ui->lineEdit->text() + "'");
-        record=quary.record();
-        quary.first();
+    if (login.isEmpty() || password.isEmpty())
+    {
+        QMessageBox::critical(this, "Ошибка входа", "Пожалуйста, введите логин и пароль.", QMessageBox::Ok);
+        return;
+    }
 
-        if (quary.value(record.indexOf("isBlocked")).toString() == "1")
-        {
-            reply = QMessageBox::critical(this, "Ошибка входа", "Ваш профиль был заблокирован, обратитесь в службу поддержки.", QMessageBox::Ok);
-            return;
-        }
+    if  (!database->query.size())
+    {
+        QMessageBox::critical(this, "Ошибка входа", "Неправильный логин или пароль.", QMessageBox::Ok);
+        return;
+    }
 
-        else if (quary.value(record.indexOf("isVerifed")).toString() == "0")
-        {
-            reply = QMessageBox::critical(this, "Ошибка входа", "Ваш профиль еще не активирован, подождите, пока администратор подтвердит регистрацию.", QMessageBox::Ok);
-            return;
-        }
+    if (database->query.value(record.indexOf("isBlocked")).toString() == "1")
+    {
+        QMessageBox::critical(this, "Ошибка входа", "Ваш профиль был заблокирован, обратитесь в службу поддержки.", QMessageBox::Ok);
+        return;
+    }
 
-        else if  (!quary.size())
-        {
-            reply = QMessageBox::critical(this, "Ошибка входа", "Неправильный логин или пароль.", QMessageBox::Ok);
-            return;
-        }
+    if (database->query.value(record.indexOf("isVerified")).toString() == "0")
+    {
+        QMessageBox::critical(this, "Ошибка входа", "Ваш профиль еще не активирован, подождите, пока администратор подтвердит регистрацию.", QMessageBox::Ok);
+        return;
+    }
 
-
-              QString zapros="SELECT acc_ID FROM auth WHERE login = '"+ ui->lineEdit_2->text() + "' AND password = '" +  ui->lineEdit->text() +"'" ;
-              quary.exec(zapros);
-              QSqlRecord rec = quary.record();
-              quary.first();
-              msg->acc_id = quary.value(rec.indexOf("acc_ID")).toInt();
-              this->close();
-              msg->shortDisplay();
-              msg->show();
-
-
-
-
-
-     }
-void Login::on_pushButton_3_clicked()
-{
-    ui->lineEdit->clear();
-    ui->lineEdit_2->clear();
+    database->query.exec("SELECT acc_ID FROM auth WHERE login = '"+ login + "' AND password = '" + password +"'");
+    database->query.first();
+    record = database->query.record();
+    messages->acc_id = database->query.value(record.indexOf("acc_ID")).toInt();
+    messages->shortDisplay();
+    messages->show();
+    this->close();
 }
 
-
-void Login::on_pushButton_5_clicked()
+void Login::on_clear_clicked()
 {
-    ui->lineEdit->echoMode() == QLineEdit::Normal ? ui->lineEdit->setEchoMode(QLineEdit::Password)
-                                                  : ui->lineEdit->setEchoMode(QLineEdit::Normal);
+    ui->textLogin->clear();
+    ui->textPassword->clear();
 }
 
+void Login::on_showPassword_clicked()
+{
+    ui->textPassword->echoMode() == QLineEdit::Normal ? ui->textPassword->setEchoMode(QLineEdit::Password)
+                                                  : ui->textPassword->setEchoMode(QLineEdit::Normal);
+}
 
 

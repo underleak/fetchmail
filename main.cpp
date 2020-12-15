@@ -1,16 +1,19 @@
 #include "login.h"
-#include "messages.h"
+#include "parser.h"
 #include <QApplication>
 #include <stdlib.h>
-
+#include <QFile>
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    Login w;
-    w.show();
-    return a.exec();
 
-
-
+    QApplication application(argc, argv);
+    QFile file("/Users/pavelprodanov/Desktop/fetchmail-Nikita-1/style.qss");
+    file.open(QFile::ReadOnly);
+    application.setStyleSheet(file.readAll());
+    QIcon icon (":/icon/main/envelope_icon.png");
+    application.setWindowIcon(icon);
+    Login login;
+    login.show();
+    return application.exec();
 }
