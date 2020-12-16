@@ -5,6 +5,10 @@ Statistics::Statistics(Ui::Admin *ui)
 {
     this->ui = ui;
     database = new Database();
+    chart = new QChart();
+    chartView = new QChartView(chart);
+    barChart = new QChart();
+    barChartView = new QChartView(barChart);
 }
 
 void Statistics::updateStats()
@@ -19,12 +23,13 @@ void Statistics::updateStats()
     ui->totalMessages->setText("Всего писем в системе: " +  database->query.value(0).toString());
 
 
+    QSqlQuery query = QSqlQuery(database->getDatabase());
     database->query.exec("SELECT acc_ID FROM auth");
     while(database->query.next()){
-        database->query.exec("UPDATE auth SET total_msg = (SELECT COUNT(data.msg_id) FROM data WHERE data.acc_id = "
+        query.exec("UPDATE auth SET total_msg = (SELECT COUNT(data.msg_id) FROM data WHERE data.acc_id = "
                    + database->query.value("acc_ID").toString() + ") WHERE acc_ID = " + database->query.value("acc_ID").toString());
     }
-    database->query.clear();
+    query.clear();
 }
 
 void Statistics::getDonutPieChart()
@@ -36,7 +41,6 @@ void Statistics::getDonutPieChart()
     series->setVerticalPosition(0.6);
 
     QPieSlice *seriesSlice = new QPieSlice();
-    QChart *chart = new QChart();
     chart->setTheme(QChart::ChartThemeQt);
 
     if (ui->comboBox->currentIndex() <= 1){
@@ -67,6 +71,7 @@ void Statistics::getDonutPieChart()
     seriesSlice->setPen(QPen(Qt::darkGreen, 2));
     seriesSlice->setBrush(Qt::green);
 
+    chart->removeAllSeries();
     chart->addSeries(series);
     chart->setAnimationOptions(QChart::SeriesAnimations);
     chart->setTitleBrush(Qt::white);
@@ -76,13 +81,10 @@ void Statistics::getDonutPieChart()
     chart->legend()->setGeometry(50, 40, 400, 200);
     chart->legend()->setLabelBrush(Qt::white);
 
-    QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
     chartView->setParent(ui->donutPieChart);
     chartView->resize(375, 300);
     ui->donutPieChart->show();
-
-
 }
 
 void Statistics::getVerticalBarChart()
@@ -90,20 +92,19 @@ void Statistics::getVerticalBarChart()
     ui->verticalBarChart->hide();
 
     QStackedBarSeries *series = new QStackedBarSeries();
-    QChart *chart = new QChart();
     QStringList categories;
     QBarSet *set0 = new QBarSet("");
 
     if (ui->comboBox->currentIndex() <= 1){
         database->query.exec("SELECT acc_ID, total_msg FROM auth ORDER BY total_msg DESC");
         for (int i = 0; i < 5 && database->query.next(); ++i) {
-            categories << database->query.value(0).toString();
-            *set0 << database->query.value(1).toInt();
+            categories.append(database->query.value(0).toString());
+            set0->append(database->query.value(1).toInt());
         }
         set0->setBrush(QBrush(Qt::green));
         series->append(set0);
-        chart->legend()->hide();
-        chart->setTitle("Топ пользователей по количеству писем:");
+        barChart->legend()->hide();
+        barChart->setTitle("Топ пользователей по количеству писем:");
     }
 
     if (ui->comboBox->currentIndex() >= 2){
@@ -115,10 +116,10 @@ void Statistics::getVerticalBarChart()
         QBarSet *set2 = new QBarSet("");
         QBarSet *set3 = new QBarSet("");
 
-        *set0 << 25;
-        *set1 << 25;
-        *set2 << 25;
-        *set3 << 25;
+        set0->append(25);
+        set1->append(25);
+        set2->append(25);
+        set3->append(25);
 
         database->query.exec("select avatar, name, surname, dateBirth from auth where acc_ID = " + acc_ID);
         database->query.first();
@@ -137,7 +138,7 @@ void Statistics::getVerticalBarChart()
         set2->setLabel(colorLabels.at(2));
         set3->setLabel(colorLabels.at(3));
 
-        chart->setTheme(QChart::ChartThemeQt);
+        barChart->setTheme(QChart::ChartThemeQt);
         for (int i = 0; i < grayLabels.size(); i++){
             if (i == 0) set3->setBrush(QBrush(Qt::gray));
             else if (i == 1) set2->setBrush(QBrush(Qt::gray));
@@ -149,32 +150,21 @@ void Statistics::getVerticalBarChart()
         series->append(set2);
         series->append(set3);
         categories << ui->lineEdit->text();
-        chart->setTitle("Заполненность профиля " + ui->lineEdit->text() + ": " + QString::number(100 - 25 * grayLabels.size()) + "%");
+        barChart->setTitle("Заполненность профиля " + ui->lineEdit->text() + ": " + QString::number(100 - 25 * grayLabels.size()) + "%");
     }
-    chart->addSeries(series);
-    chart->legend()->setAlignment(Qt::AlignTop);
-    chart->legend()->setMinimumWidth(300);
-    chart->setTitleBrush(Qt::white);
-    chart->setAnimationOptions(QChart::SeriesAnimations);
-    chart->setBackgroundBrush(QBrush(QColor("transparent")));
+    barChart->removeAllSeries();
+    barChart->addSeries(series);
+    barChart->legend()->setAlignment(Qt::AlignTop);
+    barChart->legend()->setMinimumWidth(300);
+    barChart->setTitleBrush(Qt::white);
+    barChart->setAnimationOptions(QChart::SeriesAnimations);
+    barChart->setBackgroundBrush(QBrush(QColor("transparent")));
+    barChart->createDefaultAxes();
+    barChart->axisX()->setLabelsBrush(Qt::white);
+    barChart->axisY()->setLabelsBrush(Qt::white);
 
-    QBarCategoryAxis *axisX = new QBarCategoryAxis();
-    axisX->setLabelsBrush(Qt::white);
-    axisX->append(categories);
-    chart->addAxis(axisX, Qt::AlignBottom);
-    series->attachAxis(axisX);
-
-    QValueAxis *axisY = new QValueAxis();
-    axisY->setLabelsBrush(Qt::white);
-    chart->addAxis(axisY, Qt::AlignLeft);
-    series->attachAxis(axisY);
-
-    QChartView *chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->setParent(ui->verticalBarChart);
-    chartView->resize(400, 300);
+    barChartView->setRenderHint(QPainter::Antialiasing);
+    barChartView->setParent(ui->verticalBarChart);
+    barChartView->resize(400, 300);
     ui->verticalBarChart->show();
-
-
-
 }

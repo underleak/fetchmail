@@ -9,9 +9,9 @@ QSqlDatabase& Database::getDatabase()
 {
     static QSqlDatabase database = QSqlDatabase::addDatabase("QMYSQL");
     database.setHostName("localhost");
-    database.setDatabaseName("testdb");
+    database.setDatabaseName("mail");
     database.setUserName("root");
-    database.setPassword("20643579");
+    database.setPassword("12345");
     if (!database.isOpen()){
         if(!database.open())
             qDebug() << database.lastError().text();

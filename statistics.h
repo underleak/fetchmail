@@ -20,6 +20,10 @@ class Statistics
 public:
     Statistics(Ui::Admin *ui);
     QString acc_ID;
+    QChart *chart;
+    QChartView *chartView;
+    QChart *barChart;
+    QChartView *barChartView;
     void updateStats();
     void getDonutPieChart();
     void getVerticalBarChart();

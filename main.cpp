@@ -7,7 +7,7 @@
 int main(int argc, char *argv[])
 {
     QApplication application(argc, argv);
-    QFile file("/Users/pavelprodanov/Desktop/fetchmail-Nikita/style.qss");
+    QFile file("style.qss");
     file.open(QFile::ReadOnly);
     application.setStyleSheet(file.readAll());
     QIcon icon (":/icon/main/envelope_icon.png");
