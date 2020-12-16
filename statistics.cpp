@@ -22,7 +22,6 @@ void Statistics::updateStats()
     database->query.first();
     ui->totalMessages->setText("Всего писем в системе: " +  database->query.value(0).toString());
 
-
     QSqlQuery query = QSqlQuery(database->getDatabase());
     database->query.exec("SELECT acc_ID FROM auth");
     while(database->query.next()){
@@ -160,8 +159,8 @@ void Statistics::getVerticalBarChart()
     barChart->setAnimationOptions(QChart::SeriesAnimations);
     barChart->setBackgroundBrush(QBrush(QColor("transparent")));
     barChart->createDefaultAxes();
-    barChart->axisX()->setLabelsBrush(Qt::white);
-    barChart->axisY()->setLabelsBrush(Qt::white);
+    barChart->axes(Qt::Horizontal).back()->setLabelsBrush(Qt::white);
+    barChart->axes(Qt::Vertical).back()->setLabelsBrush(Qt::white);
 
     barChartView->setRenderHint(QPainter::Antialiasing);
     barChartView->setParent(ui->verticalBarChart);
