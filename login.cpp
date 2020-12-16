@@ -1,15 +1,20 @@
 #include "login.h"
 #include "ui_login.h"
 
-Login::Login(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::Login)
+Login::Login(QWidget *parent):
+    QMainWindow(parent),
+    ui(new Ui::Login)
 {
     ui->setupUi(this);
     this->setWindowTitle("Вход");
+    ui->textPassword->setEchoMode(QLineEdit::Password);
+    this->setFixedSize(777,501);
 
+    database = new Database();
     registration = new Registration();
-    connect(registration, &Registration::back, this, &Registration::show);
+    messages = new Messages();
+
+    connect(registration, &Registration::back, this, &Login::show);
 }
 
 Login::~Login()
@@ -17,45 +22,71 @@ Login::~Login()
     delete ui;
 }
 
-
-void Login::on_pushButton_2_clicked()
+void Login::on_signUp_clicked()
 {
     registration->show();
     this->close();
 }
 
-QSqlDatabase& Login::get_db()
+void Login::on_signIn_clicked()
 {
-    static QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName("127.0.0.1");
-    db.setDatabaseName("mail");
-    db.setUserName("root");
-    db.setPassword("12345");
-    if(!db.open())
-    {
-        qDebug() << db.lastError().text();
-    }
-    return db;
-}
+    QString login = ui->textLogin->text();
+    QString password = ui->textPassword->text();
 
-void Login::on_pushButton_clicked()
-{
-    QString login = ui->lineEdit_2->text();
-    QString password = ui->lineEdit->text();
-
-    quary = QSqlQuery(Login::get_db());
-    if (!quary.exec("SELECT * FROM users"))
+    if (login == "admin" && password == "admin")
     {
-        qDebug() << quary.lastError().databaseText();
-        qDebug() << quary.lastError().driverText();
+        admin = new Admin();
+        this->close();
+        admin->show();
         return;
     }
 
-    quary.exec("SELECT * FROM users WHERE login = '" + login + "' AND password = '" + password + "'");
-    if (quary.size())
-        qDebug() << "ZAEBIS";
-        // тут логика после успещного входа
-    else
-        qDebug() << "HUEVO";
-        // тут логика после неуспешного входа
+    database->query.exec("SELECT * FROM auth WHERE login = '" + login + "' AND password = '" +  password + "'");
+    database->query.first();
+    database->queryRecord = database->query.record();
+
+    if (login.isEmpty() || password.isEmpty()){
+        QMessageBox::critical(this, "Ошибка входа", "Пожалуйста, введите логин и пароль.", QMessageBox::Ok);
+        return;
+    }
+
+    else if  (!database->query.size()){
+        QMessageBox::critical(this, "Ошибка входа", "Неправильный логин или пароль.", QMessageBox::Ok);
+        return;
+    }
+
+    else if (database->query.value( database->queryRecord.indexOf("isBlocked")).toString() == "1"){
+        QMessageBox::critical(this, "Ошибка входа", "Ваш профиль был заблокирован, обратитесь в службу поддержки.", QMessageBox::Ok);
+        return;
+    }
+
+    else if (database->query.value( database->queryRecord.indexOf("isVerified")).toString() == "0"){
+        QMessageBox::critical(this, "Ошибка входа", "Ваш профиль еще не активирован, подождите, пока администратор подтвердит регистрацию.", QMessageBox::Ok);
+        return;
+    }
+
+    database->queryRecord.clear();
+    database->query.clear();
+
+    database->query.exec("SELECT acc_ID FROM auth WHERE login = '"+ login + "' AND password = '" + password +"'");
+    database->query.first();
+    database->queryRecord = database->query.record();
+    messages->acc_id = database->query.value( database->queryRecord.indexOf("acc_ID")).toInt();
+    messages->shortDisplay();
+    messages->show();
+    this->close();
 }
+
+void Login::on_clear_clicked()
+{
+    ui->textLogin->clear();
+    ui->textPassword->clear();
+}
+
+void Login::on_showPassword_clicked()
+{
+    ui->textPassword->echoMode() == QLineEdit::Normal ? ui->textPassword->setEchoMode(QLineEdit::Password)
+                                                      : ui->textPassword->setEchoMode(QLineEdit::Normal);
+}
+
+

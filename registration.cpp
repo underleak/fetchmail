@@ -7,6 +7,12 @@ Registration::Registration(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("Регистрация");
+    ui->textLogin->setMaxLength(35);
+    ui->textPassword->setMaxLength(20);
+    ui->textPassword->setEchoMode(QLineEdit::Password);
+    this->setFixedSize(810,500);
+
+    database = new Database();
 }
 
 Registration::~Registration()
@@ -14,24 +20,38 @@ Registration::~Registration()
     delete ui;
 }
 
-void Registration::on_pushButton_clicked()
+void Registration::on_back_clicked()
 {
-    this->close();
+    this->destroy();
     emit back();
 }
 
-void Registration::on_pushButton_2_clicked()
+void Registration::on_signUp_clicked()
 {
-    QString login = ui->lineEdit_2->text();
-    QString password = ui->lineEdit->text();
+    QString login = ui->textLogin->text();
+    QString password = ui->textPassword->text();
 
-    quary = QSqlQuery(Login::get_db());
-    if (!quary.exec("SELECT * FROM users"))
-    {
-        qDebug() << quary.lastError().databaseText();
-        qDebug() << quary.lastError().driverText();
+    if (login.isEmpty() || password.isEmpty()) {
+        QMessageBox::critical(this, "Ошибка регистрации", "Пожалуйста, введите логин и пароль.", QMessageBox::Ok);
         return;
     }
 
-    quary.exec("INSERT INTO users VALUES ('" + login + "', '" + password + "')");
+    database->query.exec("SELECT * FROM auth WHERE login = '" + login + "'");
+    if (!database->query.size())
+        database->query.exec("INSERT INTO auth (login, password) VALUES ('" + login + "', '" + password + "')");
+    else
+        QMessageBox::critical(this, "Ошибка регистрации", "Пользователь с таким именем уже существует.", QMessageBox::Ok);
 }
+
+void Registration::on_clear_clicked()
+{
+    ui->textLogin->clear();
+    ui->textPassword->clear();
+}
+
+void Registration::on_showPassword_clicked()
+{
+    ui->textPassword->echoMode() == QLineEdit::Normal ? ui->textPassword->setEchoMode(QLineEdit::Password)
+                                                  : ui->textPassword->setEchoMode(QLineEdit::Normal);
+}
+
